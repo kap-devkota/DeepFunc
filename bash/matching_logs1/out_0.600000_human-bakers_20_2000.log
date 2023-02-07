@@ -1,0 +1,34 @@
+        human  bakers     score
+0        7726    3327  0.135193
+1        4018    3327  0.051189
+2       11473    4963  0.223790
+3        8702    4963  0.223462
+4         240    4963  0.192781
+...       ...     ...       ...
+119864  25923     690  0.043970
+119865  22680     690  0.043478
+119866  31007     690  0.043150
+119867  17072     690  0.042986
+119868  23104     690  0.041674
+
+[119869 rows x 3 columns]
+Computing Isorank similarity matrices...
+Computing pairs...
+  EXISTS: ../data/go/go-basic.obo
+../data/go/go-basic.obo: fmt(1.2) rel(2022-12-04) 46,763 GO Terms; optional_attrs(relationship)
+  EXISTS: ../data/go/go-basic.obo
+../data/go/go-basic.obo: fmt(1.2) rel(2022-12-04) 46,763 GO Terms; optional_attrs(relationship)
+  EXISTS: ../data/go/go-basic.obo
+../data/go/go-basic.obo: fmt(1.2) rel(2022-12-04) 46,763 GO Terms; optional_attrs(relationship)
+  EXISTS: ../data/go/go-basic.obo
+../data/go/go-basic.obo: fmt(1.2) rel(2022-12-04) 46,763 GO Terms; optional_attrs(relationship)
+  EXISTS: ../data/go/go-basic.obo
+../data/go/go-basic.obo: fmt(1.2) rel(2022-12-04) 46,763 GO Terms; optional_attrs(relationship)
+  EXISTS: ../data/go/go-basic.obo
+../data/go/go-basic.obo: fmt(1.2) rel(2022-12-04) 46,763 GO Terms; optional_attrs(relationship)
+  EXISTS: ../data/go/go-basic.obo
+../data/go/go-basic.obo: fmt(1.2) rel(2022-12-04) 46,763 GO Terms; optional_attrs(relationship)
+  EXISTS: ../data/go/go-basic.obo
+../data/go/go-basic.obo: fmt(1.2) rel(2022-12-04) 46,763 GO Terms; optional_attrs(relationship)
+  EXISTS: ../data/go/go-basic.obo
+../data/go/go-basic.obo: fmt(1.2) rel(2022-12-04) 46,763 GO Terms; optional_attrs(relationship)

@@ -1,0 +1,34 @@
+       mouse   rat     score
+0       1518  7829  0.047063
+1      11791   658  0.256165
+2      11791  2502  0.017037
+3      11791  6298  0.017508
+4      11791   994  0.345068
+...      ...   ...       ...
+27153    954  8800  0.009229
+27154    954  2418  0.008900
+27155    954  5311  0.009027
+27156    954  3444  0.008989
+27157    954  3770  0.008900
+
+[27158 rows x 3 columns]
+Computing Isorank similarity matrices...
+Computing pairs...
+  EXISTS: ../data/go/go-basic.obo
+../data/go/go-basic.obo: fmt(1.2) rel(2022-12-04) 46,763 GO Terms; optional_attrs(relationship)
+  EXISTS: ../data/go/go-basic.obo
+../data/go/go-basic.obo: fmt(1.2) rel(2022-12-04) 46,763 GO Terms; optional_attrs(relationship)
+  EXISTS: ../data/go/go-basic.obo
+../data/go/go-basic.obo: fmt(1.2) rel(2022-12-04) 46,763 GO Terms; optional_attrs(relationship)
+  EXISTS: ../data/go/go-basic.obo
+../data/go/go-basic.obo: fmt(1.2) rel(2022-12-04) 46,763 GO Terms; optional_attrs(relationship)
+  EXISTS: ../data/go/go-basic.obo
+../data/go/go-basic.obo: fmt(1.2) rel(2022-12-04) 46,763 GO Terms; optional_attrs(relationship)
+  EXISTS: ../data/go/go-basic.obo
+../data/go/go-basic.obo: fmt(1.2) rel(2022-12-04) 46,763 GO Terms; optional_attrs(relationship)
+  EXISTS: ../data/go/go-basic.obo
+../data/go/go-basic.obo: fmt(1.2) rel(2022-12-04) 46,763 GO Terms; optional_attrs(relationship)
+  EXISTS: ../data/go/go-basic.obo
+../data/go/go-basic.obo: fmt(1.2) rel(2022-12-04) 46,763 GO Terms; optional_attrs(relationship)
+  EXISTS: ../data/go/go-basic.obo
+../data/go/go-basic.obo: fmt(1.2) rel(2022-12-04) 46,763 GO Terms; optional_attrs(relationship)

@@ -1,0 +1,61 @@
+       fly  bakers     score
+0     9223    6255  0.033223
+1     9223    1129  0.033033
+2     9223    4977  0.044461
+3     4369    1324  0.041991
+4     1697    2255  0.032133
+...    ...     ...       ...
+8353  5552    2821  0.031137
+8354  8507    3720  0.031469
+8355  8507     137  0.032654
+8356  8507    6380  0.035592
+8357  8507     824  0.033863
+
+[8358 rows x 3 columns]
+Computing Isorank similarity matrices...
+Computing pairs...
+  EXISTS: ../data/go/go-basic.obo
+../data/go/go-basic.obo: fmt(1.2) rel(2022-12-04) 46,763 GO Terms; optional_attrs(relationship)
+  EXISTS: ../data/go/go-basic.obo
+../data/go/go-basic.obo: fmt(1.2) rel(2022-12-04) 46,763 GO Terms; optional_attrs(relationship)
+  EXISTS: ../data/go/go-basic.obo
+../data/go/go-basic.obo: fmt(1.2) rel(2022-12-04) 46,763 GO Terms; optional_attrs(relationship)
+  EXISTS: ../data/go/go-basic.obo
+../data/go/go-basic.obo: fmt(1.2) rel(2022-12-04) 46,763 GO Terms; optional_attrs(relationship)
+  EXISTS: ../data/go/go-basic.obo
+../data/go/go-basic.obo: fmt(1.2) rel(2022-12-04) 46,763 GO Terms; optional_attrs(relationship)
+  EXISTS: ../data/go/go-basic.obo
+../data/go/go-basic.obo: fmt(1.2) rel(2022-12-04) 46,763 GO Terms; optional_attrs(relationship)
+  EXISTS: ../data/go/go-basic.obo
+../data/go/go-basic.obo: fmt(1.2) rel(2022-12-04) 46,763 GO Terms; optional_attrs(relationship)
+  EXISTS: ../data/go/go-basic.obo
+../data/go/go-basic.obo: fmt(1.2) rel(2022-12-04) 46,763 GO Terms; optional_attrs(relationship)
+  EXISTS: ../data/go/go-basic.obo
+../data/go/go-basic.obo: fmt(1.2) rel(2022-12-04) 46,763 GO Terms; optional_attrs(relationship)
+Traceback (most recent call last):
+  File "/cluster/tufts/cowenlab/.envs/denoise/lib/python3.7/site-packages/pandas/core/indexes/base.py", line 2895, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "pandas/_libs/index.pyx", line 70, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 101, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1675, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 1683, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 0
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/var/spool/slurm/job41302958/slurm_script", line 154, in <module>
+    main(getargs())
+  File "/var/spool/slurm/job41302958/slurm_script", line 146, in main
+    pd.DataFrame([results], columns = columns)])
+  File "/cluster/tufts/cowenlab/.envs/denoise/lib/python3.7/site-packages/pandas/core/frame.py", line 523, in __init__
+    mgr = init_ndarray(data, index, columns, dtype=dtype, copy=copy)
+  File "/cluster/tufts/cowenlab/.envs/denoise/lib/python3.7/site-packages/pandas/core/internals/construction.py", line 190, in init_ndarray
+    values = _prep_ndarray(values, copy=copy)
+  File "/cluster/tufts/cowenlab/.envs/denoise/lib/python3.7/site-packages/pandas/core/internals/construction.py", line 305, in _prep_ndarray
+    values = np.array([convert(v) for v in values])
+  File "/cluster/tufts/cowenlab/.envs/denoise/lib/python3.7/site-packages/pandas/core/frame.py", line 2902, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/cluster/tufts/cowenlab/.envs/denoise/lib/python3.7/site-packages/pandas/core/indexes/base.py", line 2897, in get_loc
+    raise KeyError(key) from err
+KeyError: 0

@@ -1,0 +1,525 @@
+/var/spool/slurm/job41127749/slurm_script: illegal option -- b
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2020 The MathWorks, Inc.
+              R2020a Update 1 (9.8.0.1359463) 64-bit (glnxa64)
+                               April 9, 2020
+
+ 
+To get started, type doc.
+For product information, visit www.mathworks.com.
+ 
+
+o1 =
+
+    'fly'
+
+
+o2 =
+
+    'bakers'
+
+
+T0 =
+
+    4.4930
+
+
+T1 =
+
+   21.0321
+
+IsoRank Power iteration stops at the 15-th step
+
+Titer =
+
+  194.4397
+
+
+norm0 =
+
+   9.7566e-04
+
+
+norm1 =
+
+   2.3094e-05
+
+Saving
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2020 The MathWorks, Inc.
+              R2020a Update 1 (9.8.0.1359463) 64-bit (glnxa64)
+                               April 9, 2020
+
+ 
+To get started, type doc.
+For product information, visit www.mathworks.com.
+ 
+
+o1 =
+
+    'fly'
+
+
+o2 =
+
+    'mouse'
+
+
+T0 =
+
+    8.3183
+
+
+T1 =
+
+   40.1488
+
+IsoRank Power iteration stops at the 16-th step
+
+Titer =
+
+  396.3330
+
+
+norm0 =
+
+   6.8644e-04
+
+
+norm1 =
+
+   2.3067e-05
+
+Saving
+[Warning: Variable 'R0' was not saved. For variables larger than 2GB use
+MAT-file version 7.3 or later.] 
+[> In run_tests (line 32)] 
+[Warning: Variable 'R1' was not saved. For variables larger than 2GB use
+MAT-file version 7.3 or later.] 
+[> In run_tests (line 34)] 
+[Warning: Variable 'R' was not saved. For variables larger than 2GB use MAT-file
+version 7.3 or later.] 
+[> In run_tests (line 36)] 
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2020 The MathWorks, Inc.
+              R2020a Update 1 (9.8.0.1359463) 64-bit (glnxa64)
+                               April 9, 2020
+
+ 
+To get started, type doc.
+For product information, visit www.mathworks.com.
+ 
+
+o1 =
+
+    'fly'
+
+
+o2 =
+
+    'rat'
+
+
+T0 =
+
+    6.4857
+
+
+T1 =
+
+   30.3248
+
+IsoRank Power iteration stops at the 16-th step
+
+Titer =
+
+  290.8567
+
+
+norm0 =
+
+   9.2075e-04
+
+
+norm1 =
+
+   3.5757e-05
+
+Saving
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2020 The MathWorks, Inc.
+              R2020a Update 1 (9.8.0.1359463) 64-bit (glnxa64)
+                               April 9, 2020
+
+ 
+To get started, type doc.
+For product information, visit www.mathworks.com.
+ 
+
+o1 =
+
+    'human'
+
+
+o2 =
+
+    'bakers'
+
+
+T0 =
+
+   12.8615
+
+
+T1 =
+
+   64.9646
+
+IsoRank Power iteration stops at the 15-th step
+
+Titer =
+
+  626.2970
+
+
+norm0 =
+
+   4.8337e-04
+
+
+norm1 =
+
+   1.2108e-05
+
+Saving
+[Warning: Variable 'R0' was not saved. For variables larger than 2GB use
+MAT-file version 7.3 or later.] 
+[> In run_tests (line 32)] 
+[Warning: Variable 'R1' was not saved. For variables larger than 2GB use
+MAT-file version 7.3 or later.] 
+[> In run_tests (line 34)] 
+[Warning: Variable 'R' was not saved. For variables larger than 2GB use MAT-file
+version 7.3 or later.] 
+[> In run_tests (line 36)] 
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2020 The MathWorks, Inc.
+              R2020a Update 1 (9.8.0.1359463) 64-bit (glnxa64)
+                               April 9, 2020
+
+ 
+To get started, type doc.
+For product information, visit www.mathworks.com.
+ 
+
+o1 =
+
+    'human'
+
+
+o2 =
+
+    'fly'
+
+
+T0 =
+
+   19.8533
+
+
+T1 =
+
+  108.7721
+
+IsoRank Power iteration stops at the 15-th step
+
+Titer =
+
+   1.1123e+03
+
+
+norm0 =
+
+   4.5207e-04
+
+
+norm1 =
+
+   9.6177e-06
+
+Saving
+[Warning: Variable 'R0' was not saved. For variables larger than 2GB use
+MAT-file version 7.3 or later.] 
+[> In run_tests (line 32)] 
+[Warning: Variable 'R1' was not saved. For variables larger than 2GB use
+MAT-file version 7.3 or later.] 
+[> In run_tests (line 34)] 
+[Warning: Variable 'R' was not saved. For variables larger than 2GB use MAT-file
+version 7.3 or later.] 
+[> In run_tests (line 36)] 
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2020 The MathWorks, Inc.
+              R2020a Update 1 (9.8.0.1359463) 64-bit (glnxa64)
+                               April 9, 2020
+
+ 
+To get started, type doc.
+For product information, visit www.mathworks.com.
+ 
+
+o1 =
+
+    'human'
+
+
+o2 =
+
+    'mouse'
+
+
+T0 =
+
+   29.2660
+
+
+T1 =
+
+  143.0554
+
+IsoRank Power iteration stops at the 15-th step
+
+Titer =
+
+   1.3596e+03
+
+
+norm0 =
+
+   3.7084e-04
+
+
+norm1 =
+
+   1.1852e-05
+
+Saving
+[Warning: Variable 'R0' was not saved. For variables larger than 2GB use
+MAT-file version 7.3 or later.] 
+[> In run_tests (line 32)] 
+[Warning: Variable 'R1' was not saved. For variables larger than 2GB use
+MAT-file version 7.3 or later.] 
+[> In run_tests (line 34)] 
+[Warning: Variable 'R' was not saved. For variables larger than 2GB use MAT-file
+version 7.3 or later.] 
+[> In run_tests (line 36)] 
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2020 The MathWorks, Inc.
+              R2020a Update 1 (9.8.0.1359463) 64-bit (glnxa64)
+                               April 9, 2020
+
+ 
+To get started, type doc.
+For product information, visit www.mathworks.com.
+ 
+
+o1 =
+
+    'human'
+
+
+o2 =
+
+    'rat'
+
+
+T0 =
+
+   20.7200
+
+
+T1 =
+
+  102.3144
+
+IsoRank Power iteration stops at the 16-th step
+
+Titer =
+
+   1.0708e+03
+
+
+norm0 =
+
+   4.8259e-04
+
+
+norm1 =
+
+   1.3970e-05
+
+Saving
+[Warning: Variable 'R0' was not saved. For variables larger than 2GB use
+MAT-file version 7.3 or later.] 
+[> In run_tests (line 32)] 
+[Warning: Variable 'R1' was not saved. For variables larger than 2GB use
+MAT-file version 7.3 or later.] 
+[> In run_tests (line 34)] 
+[Warning: Variable 'R' was not saved. For variables larger than 2GB use MAT-file
+version 7.3 or later.] 
+[> In run_tests (line 36)] 
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2020 The MathWorks, Inc.
+              R2020a Update 1 (9.8.0.1359463) 64-bit (glnxa64)
+                               April 9, 2020
+
+ 
+To get started, type doc.
+For product information, visit www.mathworks.com.
+ 
+
+o1 =
+
+    'mouse'
+
+
+o2 =
+
+    'bakers'
+
+
+T0 =
+
+    5.5301
+
+
+T1 =
+
+   25.8344
+
+IsoRank Power iteration stops at the 16-th step
+
+Titer =
+
+  249.8067
+
+
+norm0 =
+
+   7.8874e-04
+
+
+norm1 =
+
+   3.5982e-05
+
+Saving
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2020 The MathWorks, Inc.
+              R2020a Update 1 (9.8.0.1359463) 64-bit (glnxa64)
+                               April 9, 2020
+
+ 
+To get started, type doc.
+For product information, visit www.mathworks.com.
+ 
+
+o1 =
+
+    'mouse'
+
+
+o2 =
+
+    'rat'
+
+
+T0 =
+
+    8.8678
+
+
+T1 =
+
+   38.5346
+
+IsoRank Power iteration stops at the 16-th step
+
+Titer =
+
+  367.5237
+
+
+norm0 =
+
+   7.7717e-04
+
+
+norm1 =
+
+   3.0428e-05
+
+Saving
+[Warning: Variable 'R0' was not saved. For variables larger than 2GB use
+MAT-file version 7.3 or later.] 
+[> In run_tests (line 32)] 
+[Warning: Variable 'R1' was not saved. For variables larger than 2GB use
+MAT-file version 7.3 or later.] 
+[> In run_tests (line 34)] 
+[Warning: Variable 'R' was not saved. For variables larger than 2GB use MAT-file
+version 7.3 or later.] 
+[> In run_tests (line 36)] 
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2020 The MathWorks, Inc.
+              R2020a Update 1 (9.8.0.1359463) 64-bit (glnxa64)
+                               April 9, 2020
+
+ 
+To get started, type doc.
+For product information, visit www.mathworks.com.
+ 
+
+o1 =
+
+    'rat'
+
+
+o2 =
+
+    'bakers'
+
+
+T0 =
+
+    4.2353
+
+
+T1 =
+
+   19.6945
+
+IsoRank Power iteration stops at the 16-th step
+
+Titer =
+
+  188.9897
+
+
+norm0 =
+
+    0.0011
+
+
+norm1 =
+
+   3.6559e-05
+
+Saving

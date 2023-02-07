@@ -1,0 +1,515 @@
+/var/spool/slurm/job41127751/slurm_script: illegal option -- b
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2020 The MathWorks, Inc.
+              R2020a Update 1 (9.8.0.1359463) 64-bit (glnxa64)
+                               April 9, 2020
+
+ 
+To get started, type doc.
+For product information, visit www.mathworks.com.
+ 
+
+o1 =
+
+    'fly'
+
+
+o2 =
+
+    'bakers'
+
+
+T0 =
+
+    4.5717
+
+
+T1 =
+
+   21.4536
+
+
+Titer =
+
+  291.4681
+
+
+norm0 =
+
+    0.0011
+
+
+norm1 =
+
+   1.7058e-04
+
+Saving
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2020 The MathWorks, Inc.
+              R2020a Update 1 (9.8.0.1359463) 64-bit (glnxa64)
+                               April 9, 2020
+
+ 
+To get started, type doc.
+For product information, visit www.mathworks.com.
+ 
+
+o1 =
+
+    'fly'
+
+
+o2 =
+
+    'mouse'
+
+
+T0 =
+
+   10.5145
+
+
+T1 =
+
+   50.1917
+
+
+Titer =
+
+  610.2973
+
+
+norm0 =
+
+   7.8927e-04
+
+
+norm1 =
+
+   1.8986e-04
+
+Saving
+[Warning: Variable 'R0' was not saved. For variables larger than 2GB use
+MAT-file version 7.3 or later.] 
+[> In run_tests (line 32)] 
+[Warning: Variable 'R1' was not saved. For variables larger than 2GB use
+MAT-file version 7.3 or later.] 
+[> In run_tests (line 34)] 
+[Warning: Variable 'R' was not saved. For variables larger than 2GB use MAT-file
+version 7.3 or later.] 
+[> In run_tests (line 36)] 
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2020 The MathWorks, Inc.
+              R2020a Update 1 (9.8.0.1359463) 64-bit (glnxa64)
+                               April 9, 2020
+
+ 
+To get started, type doc.
+For product information, visit www.mathworks.com.
+ 
+
+o1 =
+
+    'fly'
+
+
+o2 =
+
+    'rat'
+
+
+T0 =
+
+    7.8281
+
+
+T1 =
+
+   37.0751
+
+
+Titer =
+
+  439.9808
+
+
+norm0 =
+
+    0.0012
+
+
+norm1 =
+
+   4.2828e-04
+
+Saving
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2020 The MathWorks, Inc.
+              R2020a Update 1 (9.8.0.1359463) 64-bit (glnxa64)
+                               April 9, 2020
+
+ 
+To get started, type doc.
+For product information, visit www.mathworks.com.
+ 
+
+o1 =
+
+    'human'
+
+
+o2 =
+
+    'bakers'
+
+
+T0 =
+
+   15.5605
+
+
+T1 =
+
+   80.0581
+
+
+Titer =
+
+  991.8248
+
+
+norm0 =
+
+   5.2551e-04
+
+
+norm1 =
+
+   1.0133e-04
+
+Saving
+[Warning: Variable 'R0' was not saved. For variables larger than 2GB use
+MAT-file version 7.3 or later.] 
+[> In run_tests (line 32)] 
+[Warning: Variable 'R1' was not saved. For variables larger than 2GB use
+MAT-file version 7.3 or later.] 
+[> In run_tests (line 34)] 
+[Warning: Variable 'R' was not saved. For variables larger than 2GB use MAT-file
+version 7.3 or later.] 
+[> In run_tests (line 36)] 
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2020 The MathWorks, Inc.
+              R2020a Update 1 (9.8.0.1359463) 64-bit (glnxa64)
+                               April 9, 2020
+
+ 
+To get started, type doc.
+For product information, visit www.mathworks.com.
+ 
+
+o1 =
+
+    'human'
+
+
+o2 =
+
+    'fly'
+
+
+T0 =
+
+   23.4537
+
+
+T1 =
+
+  124.8577
+
+
+Titer =
+
+   1.5731e+03
+
+
+norm0 =
+
+   4.8690e-04
+
+
+norm1 =
+
+   7.7214e-05
+
+Saving
+[Warning: Variable 'R0' was not saved. For variables larger than 2GB use
+MAT-file version 7.3 or later.] 
+[> In run_tests (line 32)] 
+[Warning: Variable 'R1' was not saved. For variables larger than 2GB use
+MAT-file version 7.3 or later.] 
+[> In run_tests (line 34)] 
+[Warning: Variable 'R' was not saved. For variables larger than 2GB use MAT-file
+version 7.3 or later.] 
+[> In run_tests (line 36)] 
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2020 The MathWorks, Inc.
+              R2020a Update 1 (9.8.0.1359463) 64-bit (glnxa64)
+                               April 9, 2020
+
+ 
+To get started, type doc.
+For product information, visit www.mathworks.com.
+ 
+
+o1 =
+
+    'human'
+
+
+o2 =
+
+    'mouse'
+
+
+T0 =
+
+   33.4796
+
+
+T1 =
+
+  155.4693
+
+
+Titer =
+
+   1.7038e+03
+
+
+norm0 =
+
+   4.1748e-04
+
+
+norm1 =
+
+   9.2853e-05
+
+Saving
+[Warning: Variable 'R0' was not saved. For variables larger than 2GB use
+MAT-file version 7.3 or later.] 
+[> In run_tests (line 32)] 
+[Warning: Variable 'R1' was not saved. For variables larger than 2GB use
+MAT-file version 7.3 or later.] 
+[> In run_tests (line 34)] 
+[Warning: Variable 'R' was not saved. For variables larger than 2GB use MAT-file
+version 7.3 or later.] 
+[> In run_tests (line 36)] 
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2020 The MathWorks, Inc.
+              R2020a Update 1 (9.8.0.1359463) 64-bit (glnxa64)
+                               April 9, 2020
+
+ 
+To get started, type doc.
+For product information, visit www.mathworks.com.
+ 
+
+o1 =
+
+    'human'
+
+
+o2 =
+
+    'rat'
+
+
+T0 =
+
+   20.4766
+
+
+T1 =
+
+   98.7016
+
+
+Titer =
+
+   1.2094e+03
+
+
+norm0 =
+
+   6.0544e-04
+
+
+norm1 =
+
+   1.8363e-04
+
+Saving
+[Warning: Variable 'R0' was not saved. For variables larger than 2GB use
+MAT-file version 7.3 or later.] 
+[> In run_tests (line 32)] 
+[Warning: Variable 'R1' was not saved. For variables larger than 2GB use
+MAT-file version 7.3 or later.] 
+[> In run_tests (line 34)] 
+[Warning: Variable 'R' was not saved. For variables larger than 2GB use MAT-file
+version 7.3 or later.] 
+[> In run_tests (line 36)] 
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2020 The MathWorks, Inc.
+              R2020a Update 1 (9.8.0.1359463) 64-bit (glnxa64)
+                               April 9, 2020
+
+ 
+To get started, type doc.
+For product information, visit www.mathworks.com.
+ 
+
+o1 =
+
+    'mouse'
+
+
+o2 =
+
+    'bakers'
+
+
+T0 =
+
+    5.4643
+
+
+T1 =
+
+   25.9813
+
+
+Titer =
+
+  315.7287
+
+
+norm0 =
+
+   8.7028e-04
+
+
+norm1 =
+
+   2.3774e-04
+
+Saving
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2020 The MathWorks, Inc.
+              R2020a Update 1 (9.8.0.1359463) 64-bit (glnxa64)
+                               April 9, 2020
+
+ 
+To get started, type doc.
+For product information, visit www.mathworks.com.
+ 
+
+o1 =
+
+    'mouse'
+
+
+o2 =
+
+    'rat'
+
+
+T0 =
+
+    9.1330
+
+
+T1 =
+
+   39.3282
+
+
+Titer =
+
+  445.5619
+
+
+norm0 =
+
+    0.0012
+
+
+norm1 =
+
+   5.0009e-04
+
+Saving
+[Warning: Variable 'R0' was not saved. For variables larger than 2GB use
+MAT-file version 7.3 or later.] 
+[> In run_tests (line 32)] 
+[Warning: Variable 'R1' was not saved. For variables larger than 2GB use
+MAT-file version 7.3 or later.] 
+[> In run_tests (line 34)] 
+[Warning: Variable 'R' was not saved. For variables larger than 2GB use MAT-file
+version 7.3 or later.] 
+[> In run_tests (line 36)] 
+
+                            < M A T L A B (R) >
+                  Copyright 1984-2020 The MathWorks, Inc.
+              R2020a Update 1 (9.8.0.1359463) 64-bit (glnxa64)
+                               April 9, 2020
+
+ 
+To get started, type doc.
+For product information, visit www.mathworks.com.
+ 
+
+o1 =
+
+    'rat'
+
+
+o2 =
+
+    'bakers'
+
+
+T0 =
+
+    4.2650
+
+
+T1 =
+
+   20.0871
+
+
+Titer =
+
+  241.2163
+
+
+norm0 =
+
+    0.0015
+
+
+norm1 =
+
+   5.2679e-04
+
+Saving

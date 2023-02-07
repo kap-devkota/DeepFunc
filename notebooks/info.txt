@@ -1,0 +1,11 @@
+\begin{tabular}{lrrrr}
+\toprule
+network &  \#nodes &  \#edges &  average degree &  average clustering coefficient \\
+\midrule
+  human &   32431 &  301529 &       18.595110 &                        0.069857 \\
+    fly &   11247 &   42555 &        7.567351 &                        0.027477 \\
+  mouse &   13967 &   36541 &        5.232477 &                        0.051670 \\
+    rat &   10792 &   23315 &        4.320793 &                        0.075348 \\
+ bakers &    6478 &   70638 &       21.808583 &                        0.285876 \\
+\bottomrule
+\end{tabular}

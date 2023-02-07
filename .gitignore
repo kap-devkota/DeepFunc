@@ -1,0 +1,11 @@
+*~
+src/**
+mundo2logs/**
+mundo2data/**
+/*.tsv
+/*.log
+**/*.npy
+**/*.sav
+**/__pycache__
+**/.ipynb_checkpoints
+**/backup

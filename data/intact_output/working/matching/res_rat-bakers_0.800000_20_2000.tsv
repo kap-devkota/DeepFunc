@@ -1,0 +1,2 @@
+org1	org2	norm(R-R0)	norm(R-R1)	sim_with_isorank-R(R0)	sim_with_isorank-R(R1)	Edge Correctness (R0)	Edge Correctness (R1)	Edge Correctness (R)	Symmetric substructure (S^3-R0)	Symmetric substructure (S^3-R1)	Symmetric substructure (S^3-R)	LCCS (R0)	LCCS (R1)	LCCS (R)
+rat	bakers	0.0009756104092116471	4.6296603112097006e-05	0.92	0.963	0.008274231678486997	0.007641921397379912	0.008705114254624592	0.000811500115928588	0.000811500115928588	0.0009276437847866419	1	1	1

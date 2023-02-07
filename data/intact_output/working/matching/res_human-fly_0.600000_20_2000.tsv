@@ -1,0 +1,2 @@
+org1	org2	norm(R-R0)	norm(R-R1)	sim_with_isorank-R(R0)	sim_with_isorank-R(R1)	Edge Correctness (R0)	Edge Correctness (R1)	Edge Correctness (R)	Symmetric substructure (S^3-R0)	Symmetric substructure (S^3-R1)	Symmetric substructure (S^3-R)	LCCS (R0)	LCCS (R1)	LCCS (R)
+human	fly	0.0007893646534497397	4.986830514202973e-05	0.947	0.985	0.0055900621118012426	0.005689001264222503	0.005632040050062578	0.0030354131534569982	0.0030354131534569982	0.0030191211003019122	1	1	1

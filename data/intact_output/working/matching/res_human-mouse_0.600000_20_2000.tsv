@@ -1,0 +1,2 @@
+org1	org2	norm(R-R0)	norm(R-R1)	sim_with_isorank-R(R0)	sim_with_isorank-R(R1)	Edge Correctness (R0)	Edge Correctness (R1)	Edge Correctness (R)	Symmetric substructure (S^3-R0)	Symmetric substructure (S^3-R1)	Symmetric substructure (S^3-R)	LCCS (R0)	LCCS (R1)	LCCS (R)
+human	mouse	0.0006538109054722292	4.5776960357976096e-05	0.951	0.9915	0.0014534883720930232	0.0015026296018031556	0.001516300227445034	0.0008240626287597857	0.0008240626287597857	0.0008312551953449709	1	1	1
