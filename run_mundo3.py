@@ -213,7 +213,7 @@ def main(args):
                                     msg = "Running ISORANK.")
         else:
             isorank_file = args.landmarks_a_b
-        SVD_A = train_model_and_project(args.model, SVDA, SVDB, isorank_file, 
+        SVDB_A = train_model_and_project(args.model, SVDA, SVDB, isorank_file, 
                                          args.no_landmarks, nmapA, nmapB, msg = "Training the Attention Model and Projecting the SVD embeddings of Species B")
         if args.transformed_b_a is not None:
             np.save(args.transformed_b_a, SVDB_A)
