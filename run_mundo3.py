@@ -14,6 +14,7 @@ from mundo2.data import Data
 from mundo2.model import AttentionModel
 from mundo2.isorank import compute_isorank_and_save
 from mundo2.predict_score import topk_accs, compute_metric, dsd_func, dsd_func_mundo
+from mundo2.linalg import compute_k_svd
 import re
 import pandas as pd
 from sklearn.manifold import Isomap
@@ -21,7 +22,7 @@ import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
 
-# python run_mundo2.py --ppiA data/intact_output/fly.s.tsv --ppiB data/intact_output/bakers.s.tsv --nameA fly --nameB bakers --dsd_A_dist mundo2data/fly-dsd-dist.npy --dsd_B_dist mundo2data/yeast-dsd-dist.npy --thres_dsd_dist 10 --json_A mundo2data/fly.json --json_B mundo2data/yeast.json --mds_A mundo2data/fly-isomap.npy --mds_B mundo2data/yeast-isomap.npy --mds_r 100 --landmarks_a_b mundo2data/isorank_fly_bakers.tsv --no_landmarks 450 --model "mundo2data/yeast->fly.sav" --transformed_b_a "mundo2data/yeast->fly_emb.npy" --mds_dist_a_b "mundo2data/dist_fly->yeast.npy" --compute_go_eval --kA 10 --kB 10 --metrics top-1-acc --output_file testfly_yeast.tsv --go_A data/go/fly.output.mapping.gaf --go_B data/go/bakers.output.mapping.gaf  # only apply --compute_isorank if you have not generated isorank
+# python run_mundo2.py --ppiA data/intact_output/fly.s.tsv --ppiB data/intact_output/bakers.s.tsv --nameA fly --nameB bakers --dsd_A_dist mundo2data/fly-dsd-dist.npy --dsd_B_dist mundo2data/yeast-dsd-dist.npy --thres_dsd_dist 10 --json_A mundo2data/fly.json --json_B mundo2data/yeast.json --svd_A mundo2data/fly-isomap.npy --svd_B mundo2data/yeast-isomap.npy --svd_r 100 --landmarks_a_b mundo2data/isorank_fly_bakers.tsv --no_landmarks 450 --model "mundo2data/yeast->fly.sav" --transformed_b_a "mundo2data/yeast->fly_emb.npy" --svd_dist_a_b "mundo2data/dist_fly->yeast.npy" --compute_go_eval --kA 10 --kB 10 --metrics top-1-acc --output_file testfly_yeast.tsv --go_A data/go/fly.output.mapping.gaf --go_B data/go/bakers.output.mapping.gaf  # only apply --compute_isorank if you have not generated isorank
 
 def getargs():
     parser = argparse.ArgumentParser()
@@ -35,16 +36,16 @@ def getargs():
     # DSD
     parser.add_argument("--dsd_A_dist", default = None, help = "Precomputed DSD distance for Species A. If not present, the matrix will be computed at this location")
     parser.add_argument("--dsd_B_dist", default = None, help = "Precomputed DSD distance for Species B. If not present, the matrix will be computed at this location")
-    parser.add_argument("--thres_dsd_dist", type = float, default = 10, help = "If the DSD distance computed is > this threshold, replace that with the threshold")
+    parser.add_argument("--thres_dsd_dist", type = float, default = 100, help = "If the DSD distance computed is > this threshold, replace that with the threshold")
     
     # JSON
-    parser.add_argument("--json_A", default = None, help = "Protein annotation to Matrix index in json format for DSD and MDS matrix of A. If not present, the JSON file will be computed at this location")
-    parser.add_argument("--json_B", default = None, help = "Protein annotation to Matrix index in json format for DSD and MDS matrix of B. If not present, the JSON file will be computed at this location")
+    parser.add_argument("--json_A", default = None, help = "Protein annotation to Matrix index in json format for DSD and SVD matrix of A. If not present, the JSON file will be computed at this location")
+    parser.add_argument("--json_B", default = None, help = "Protein annotation to Matrix index in json format for DSD and SVD matrix of B. If not present, the JSON file will be computed at this location")
     
-    # MDS
-    parser.add_argument("--mds_A", default = None, help = "MDS representation of the species A. If not present, the MDS representation will be produced at this location")
-    parser.add_argument("--mds_B", default = None, help = "MDS representation of the species B. If not present, the MDS representation will be produced at this location")
-    parser.add_argument("--mds_r", default = 100, type = int, help = "MDS default dimension")
+    # SVD
+    parser.add_argument("--svd_A", default = None, help = "SVD representation of the species A. If not present, the SVD representation will be produced at this location")
+    parser.add_argument("--svd_B", default = None, help = "SVD representation of the species B. If not present, the SVD representation will be produced at this location")
+    parser.add_argument("--svd_r", default = 100, type = int, help = "SVD default dimension")
     
     # ISORANK
     parser.add_argument("--landmarks_a_b", default = None, help = "the tsv file with format: `protA  protB  [score]`. Where protA is from speciesA and protB from speciesB")
@@ -55,7 +56,7 @@ def getargs():
     # MODEL
     parser.add_argument("--model", default = None, help = "Location of the trained model. If not provided, the trained model is saved at this location")
     parser.add_argument("--transformed_b_a", default = None, help = "Location of the embeddings of B transformed to the space of A. If not given, the transformed embedding will be saved at this location")
-    parser.add_argument("--mds_dist_a_b", default = None, help = "Location of the MDS distance between A and transformed B. If not present, the distance will be created at this location")
+    parser.add_argument("--svd_dist_a_b", default = None, help = "Location of the SVD distance between A and transformed B. If not present, the distance will be created at this location")
     
     # Evaluation
     parser.add_argument("--compute_go_eval", default = False, action = "store_true", help = "Compute GO functional evaluation on the model?")
@@ -109,33 +110,32 @@ def compute_dsd_dist(ppifile, dsdfile, jsonfile, threshold = -1, **kwargs):
         return DSDdist, protmap
     
     
-def compute_mds(mdsfile, dsddist, mds_r = 100, **kwargs):
-    assert os.path.exists(mdsfile) or dsddist is not None
+# SVD FILE
+def compute_svd(svdfile, dsddist, svd_r = 100, **kwargs):
+    assert os.path.exists(svdfile) or dsddist is not None
     print(f"[!] {kwargs['msg']}")
-    if os.path.exists(mdsfile):
+    if os.path.exists(svdfile):
         print(f"[!!] \tAlready computed!")
-        MDSemb = np.load(mdsfile)
-        return MDSemb
+        SVDemb = np.load(svdfile)
+        return SVDemb
     else:
-        mdsemb = Isomap(n_components = mds_r, metric = "precomputed")
-        MDSemb = mdsemb.fit_transform(dsddist)
-        if mdsfile is not None:
-            np.save(mdsfile, MDSemb)
-        print(f"[!]\t Reconstruction Error: {mdsemb.reconstruction_error()}")
-        return MDSemb
+        SVDemb = compute_k_svd(dsddist, svd_r)
+        if svdfile is not None:
+            np.save(svdfile, SVDemb)
+        return SVDemb
 
     
-def train_model_and_project(modelfile, mdsA, mdsB, isorankfile, no_matches, protAmap, protBmap, **kwargs):
-    assert os.path.exists(modelfile) or (mdsA is not None and mdsB is not None)
-    mdsBtorch = torch.tensor(mdsB, dtype = torch.float32).unsqueeze(-1)
+def train_model_and_project(modelfile, svdA, svdB, isorankfile, no_matches, protAmap, protBmap, **kwargs):
+    assert os.path.exists(modelfile) or (svdA is not None and svdB is not None)
+    svdBtorch = torch.tensor(svdB, dtype = torch.float32).unsqueeze(-1)
     print(f"[!] {kwargs['msg']}")
     if os.path.exists(modelfile):
         model = torch.load(modelfile, map_location = "cpu")
         model.eval()
         with torch.no_grad():
-            return model(mdsBtorch).squeeze().numpy()
+            return model(svdBtorch).squeeze().numpy()
     else:
-        data = Data(isorankfile, no_matches, mdsA, mdsB, protAmap, protBmap)
+        data = Data(isorankfile, no_matches, svdA, svdB, protAmap, protBmap)
         trainloader = DataLoader(data, shuffle = True, batch_size = 10)
         loss_fn = nn.MSELoss()
         model = AttentionModel()
@@ -160,7 +160,7 @@ def train_model_and_project(modelfile, mdsA, mdsB, isorankfile, no_matches, prot
             torch.save(model, modelfile)
         model.eval()
         with torch.no_grad():
-            return model(mdsBtorch).squeeze().detach().numpy()
+            return model(svdBtorch).squeeze().detach().numpy()
 
     
 def get_go_maps(nmap, gofile, gotype):
@@ -189,20 +189,20 @@ def main(args):
     DSDB, nmapB = compute_dsd_dist(args.ppiB, args.dsd_B_dist, args.json_B, threshold = 10,
                                   msg = "Running DSD distance for Species B")
     
-    MDSA = compute_mds(args.mds_A, DSDA, mds_r = args.mds_r, 
-                      msg = "Computing the MDS embeddings from the DSD distances for Species A")
-    MDSB = compute_mds(args.mds_B, DSDB, mds_r = args.mds_r, 
-                      msg = "Computing the MDS embeddings from the DSD distances for Species B")
+    SVDA = compute_svd(args.svd_A, DSDA, svd_r = args.svd_r, 
+                      msg = "Computing the SVD embeddings from the DSD distances for Species A")
+    SVDB = compute_svd(args.svd_B, DSDB, svd_r = args.svd_r, 
+                      msg = "Computing the SVD embeddings from the DSD distances for Species B")
     
-    if args.mds_dist_a_b is not None and os.path.exists(args.mds_dist_a_b):
-        print("[!] MDS transformed distances between species A and B already computed")
-        DISTM = np.load(args.mds_dist_a_b)
+    if args.svd_dist_a_b is not None and os.path.exists(args.svd_dist_a_b):
+        print("[!] SVD transformed distances between species A and B already computed")
+        DISTS = np.load(args.svd_dist_a_b)
     elif args.transformed_b_a is not None and os.path.exists(args.transformed_b_a):
-        MDSB_A = np.load(args.transformed_b_a)
-        print("[!] Computing the MDS transformed distances between species A and B.")
-        DISTM  = cdist(MDSA, MDSB_A)
-        if args.mds_dist_a_b is not None:
-            np.save(args.mds_dist_a_b, DISTM)
+        SVDB_A = np.load(args.transformed_b_a)
+        print("[!] Computing the SVD transformed distances between species A and B.")
+        DISTS  = cdist(SVDA, SVDB_A)
+        if args.svd_dist_a_b is not None:
+            np.save(args.svd_dist_a_b, DISTS)
     else:
         if args.compute_isorank:
             isorank_file = f"{args.nameA}_{args.nameB}_isorank_alpha_{args.isorank_alpha}.tsv"
@@ -213,20 +213,20 @@ def main(args):
                                     msg = "Running ISORANK.")
         else:
             isorank_file = args.landmarks_a_b
-        MDSB_A = train_model_and_project(args.model, MDSA, MDSB, isorank_file, 
-                                         args.no_landmarks, nmapA, nmapB, msg = "Training the Attention Model and Projecting the MDS embeddings of Species B")
+        SVD_A = train_model_and_project(args.model, SVDA, SVDB, isorank_file, 
+                                         args.no_landmarks, nmapA, nmapB, msg = "Training the Attention Model and Projecting the SVD embeddings of Species B")
         if args.transformed_b_a is not None:
-            np.save(args.transformed_b_a, MDSB_A)
+            np.save(args.transformed_b_a, SVDB_A)
         
-        print("[!] Computing the MDS transformed distances between species A and B.")
-        DISTM = cdist(MDSA, MDSB_A)
-        if args.mds_dist_a_b is not None:
-            np.save(args.mds_dist_a_b, DISTM)
+        print("[!] Computing the SVD transformed distances between species A and B.")
+        DISTS = cdist(SVDA, SVDB_A)
+        if args.svd_dist_a_b is not None:
+            np.save(args.svd_dist_a_b, DISTS)
             
     results = []
-    "settings: nameA, nameB, MDS_emb, landmark, gotype, topkacc, dsd/mundo?, kA, kB, "
+    "settings: nameA, nameB, SVD_emb, landmark, gotype, topkacc, dsd/mundo?, kA, kB, "
     
-    settings = [args.nameA, args.nameB, args.mds_r, args.no_landmarks] 
+    settings = [args.nameA, args.nameB, args.svd_r, args.no_landmarks] 
     if args.compute_go_eval:
         """
         Perform evaluations
@@ -248,14 +248,14 @@ def main(args):
                     settings_dsd += [np.average(scores), np.std(scores)]
                     results.append(settings_dsd)
                     for kB in kBs:
-                        settings_mundo = settings + [go, metric, f"mundo2-knn-weight-{args.wB:0.3f}", kA, kB]
-                        scores, _ = compute_metric(dsd_func_mundo(DSDA, DISTM, gomapsB[go], k=kA, k_other=kB, weight_other = args.wB),
+                        settings_mundo = settings + [go, metric, f"mundo3-knn-weight-{args.wB:0.3f}", kA, kB]
+                        scores, _ = compute_metric(dsd_func_mundo(DSDA, DISTS, gomapsB[go], k=kA, k_other=kB, weight_other = args.wB),
                                                   score, list(range(len(nmapA))), gomapsA[go], kfold = 5)
                         settings_mundo += [np.average(scores), np.std(scores)]
                         
-                        print(f"GO: {go}, MUNDO2, kA: {kA}, kB: {kB} ===> {np.average(scores):0.3f} +- {np.std(scores):0.3f}")
+                        print(f"GO: {go}, MUNDO3, kA: {kA}, kB: {kB} ===> {np.average(scores):0.3f} +- {np.std(scores):0.3f}")
                         results.append(settings_mundo)
-        columns = ["Species A", "Species B", "MDS embedding", "Landmark no", "GO type", "Scoring metric", "Prediction method",
+        columns = ["Species A", "Species B", "SVD embedding", "Landmark no", "GO type", "Scoring metric", "Prediction method",
                   "kA", "kB", "Average score", "Standard deviation"]
         resultsdf = pd.DataFrame(results, columns = columns)
         resultsdf.to_csv(args.output_file, sep = "\t", index = None, mode = "a", header = not os.path.exists(args.output_file))
