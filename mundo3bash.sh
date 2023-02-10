@@ -65,7 +65,7 @@ do
        
        TRANSFORMEDB_A="mundo2data/TRANSFORMED-${SPB}->${SPA}-${SVDDIM}-${NOLANDMARKS}.npy"
        SVDDISTA_B="mundo2data/SVD-DIST-${SPB}->${SPA}-${SVDDIM}-${NOLANDMARKS}.npy"
-       CMD="./run_mundo3.py --ppiA ${PPIA} --ppiB ${PPIB} --nameA ${SPA} --nameB ${SPB} --dsd_A_dist ${DSDA} --dsd_B_dist ${DSDB} --thres_dsd_dist ${THRES_DSD_DIST} --json_A ${JSONA} --json_B ${JSONB} --svd_A ${MDSA} --svd_B ${MDSB} --svd_r ${MDSDIM} --landmarks_a_b ${LANDMARK} --no_landmarks ${NOLANDMARKS} --model ${MODEL} --transformed_b_a ${TRANSFORMEDB_A} --svd_dist_a_b ${SVDDISTA_B} --compute_go_eval --kA ${KA} --kB ${KB} --metrics ${METRICS} --output_file outputs.tsv --go_A ${GOA} --go_B ${GOB} --compute_isorank --wB ${WEIGHTMUNDO}"
+       CMD="./run_mundo3.py --ppiA ${PPIA} --ppiB ${PPIB} --nameA ${SPA} --nameB ${SPB} --dsd_A_dist ${DSDA} --dsd_B_dist ${DSDB} --thres_dsd_dist ${THRES_DSD_DIST} --json_A ${JSONA} --json_B ${JSONB} --svd_A ${SVDA} --svd_B ${SVDB} --svd_r ${SVDDIM} --landmarks_a_b ${LANDMARK} --no_landmarks ${NOLANDMARKS} --model ${MODEL} --transformed_b_a ${TRANSFORMEDB_A} --svd_dist_a_b ${SVDDISTA_B} --compute_go_eval --kA ${KA} --kB ${KB} --metrics ${METRICS} --output_file outputs.tsv --go_A ${GOA} --go_B ${GOB} --compute_isorank --wB ${WEIGHTMUNDO}"
        
        # Save the command that is just run
        echo $CMD >> mundo2logs/${LOGPREF}_${SPA}_${SPB}.cmd
