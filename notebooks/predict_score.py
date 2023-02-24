@@ -2,6 +2,39 @@ import pandas as pd
 import numpy as np
 
 
+"""
+Scoring functions
+"""
+def _met(golists = {}, go = None, all_go_labels = None, metric = None, **kwargs):
+    if len(golists) == 0 or all_go_labels == None or metric == None:
+        return None
+    
+    assert callable(metric)
+    
+    if go == None:
+        return 0
+    
+    godiff = list(all_go_labels.difference(go)) # add the rest of go labels
+    goall  = go + godiff
+    gopred = np.concatenate([np.linspace(1, 0.5, len(go)), np.zeros(len(godiff),)])
+    gotrue = [1 if go in golists else 0 for go in goal]
+    return metric(gotrue, gopred, **kwargs)
+
+    
+def _mets(prots, pred_go_map, true_go_map, all_go_labels, metric, **kwargs):
+    scores = [_met(true_go_map[p], pred_go_map[p], all_go_labels, metric, **kwargs) 
+             for p in prots]
+    scores = list(filter(lambda x: x is not None, scores))
+    return np.average(scores)
+
+
+def scoring_fcn(all_go_labels, metric, **kwargs):
+    assert metric is not None and all_go_labels is not None
+    def scfunc(prots, pred_go_map, true_go_map):
+        return _mets(prots, pred_go_map, true_go_map, all_go_labels, metric, **kwargs)
+    return scfunc
+    
+
 def topk_acc(golists = {}, go = None, k = 1):
     if len(golists) == 0:
         return None
@@ -18,6 +51,9 @@ def topk_accs(prots, pred_go_map, true_go_map, k = 1):
     return np.average(accs)
 
 
+"""
+CV function
+"""
 def compute_metric(prediction_func, scoring_func, allprots, true_go_map, kfold = 5):
     np.random.seed(137)
     permprots = np.random.permutation(allprots)
@@ -33,6 +69,9 @@ def compute_metric(prediction_func, scoring_func, allprots, true_go_map, kfold =
     return scores, np.average(scores)
 
 
+"""
+Prediction functions
+"""
 def predict_dsd(D_mat, train_go_maps, k = 10):
     predprot = [x for x in train_go_maps if train_go_maps[x] == -1]
     D_mat1 = D_mat.copy()

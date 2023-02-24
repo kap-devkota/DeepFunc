@@ -17,16 +17,20 @@ METRICS="top-1-acc,top-5-acc"
 SVDDIM=100
 NOLANDMARKS=500
 WEIGHTMUNDO=0.4
+OPFILE=outputs.tsv
+MODE=
 
-while getopts "m:l:w:" args
+while getopts "m:l:w:d" args
 do
     case $args in 
         m) SVDDIM=${OPTARG}
         ;;
         l) NOLANDMARKS=${OPTARG}
         ;;
-	w) WEIGHTMUNDO=${OPTARG}
-	;;
+        w) WEIGHTMUNDO=${OPTARG}
+        ;;
+        d) KA="10"; KB="10";METRICS="top-1-acc";MODE="-DEBUG";OPFILE="outputs${MODE}.tsv"
+        ;;
     esac
 done
 
@@ -56,22 +60,28 @@ do
        GOB=data/go/${SPB}.output.mapping.gaf 
        SVDA=mundo2data/SVD-${SPA}-${SVDDIM}.npy
        SVDB=mundo2data/SVD-${SPB}-${SVDDIM}.npy
-       MODEL="mundo2data/MODEL-${SPB}->${SPA}-${SVDDIM}-${NOLANDMARKS}.sav"
+       MODEL="mundo2data/SVD-MODEL-${SPA}->${SPB}-${SVDDIM}-${NOLANDMARKS}${MODE}.sav"
        
        LANDMARK=data/intact_output/${SPA}-${SPB}.tsv
        if [ ! -f $LANDMARK ]; then LANDMARK=data/intact_output/${SPB}-${SPA}.tsv; fi
        
        
        
-       TRANSFORMEDB_A="mundo2data/TRANSFORMED-${SPB}->${SPA}-${SVDDIM}-${NOLANDMARKS}.npy"
-       SVDDISTA_B="mundo2data/SVD-DIST-${SPB}->${SPA}-${SVDDIM}-${NOLANDMARKS}.npy"
-       CMD="./run_mundo3.py --ppiA ${PPIA} --ppiB ${PPIB} --nameA ${SPA} --nameB ${SPB} --dsd_A_dist ${DSDA} --dsd_B_dist ${DSDB} --thres_dsd_dist ${THRES_DSD_DIST} --json_A ${JSONA} --json_B ${JSONB} --svd_A ${SVDA} --svd_B ${SVDB} --svd_r ${SVDDIM} --landmarks_a_b ${LANDMARK} --no_landmarks ${NOLANDMARKS} --model ${MODEL} --transformed_b_a ${TRANSFORMEDB_A} --svd_dist_a_b ${SVDDISTA_B} --compute_go_eval --kA ${KA} --kB ${KB} --metrics ${METRICS} --output_file outputs.tsv --go_A ${GOA} --go_B ${GOB} --compute_isorank --wB ${WEIGHTMUNDO}"
+       TRANSFORMEDA_B="mundo2data/SVD-TRANSFORMED-${SPA}->${SPB}-${SVDDIM}-${NOLANDMARKS}${MODE}.npy"
+       SVDDISTA_B="mundo2data/SVD-DIST-${SPA}->${SPB}-${SVDDIM}-${NOLANDMARKS}${MODE}.npy"
+       CMD="./run_mundo3.py --ppiA ${PPIA} --ppiB ${PPIB} --nameA ${SPA} --nameB ${SPB} --dsd_A_dist ${DSDA} --dsd_B_dist ${DSDB} --thres_dsd_dist ${THRES_DSD_DIST} --json_A ${JSONA} --json_B ${JSONB} --svd_A ${SVDA} --svd_B ${SVDB} --svd_r ${SVDDIM} --landmarks_a_b ${LANDMARK} --no_landmarks ${NOLANDMARKS} --model ${MODEL} --transformed_a_b ${TRANSFORMEDA_B} --svd_dist_a_b ${SVDDISTA_B} --compute_go_eval --kA ${KA} --kB ${KB} --metrics ${METRICS} --output_file $OPFILE --go_A ${GOA} --go_B ${GOB} --compute_isorank --wB ${WEIGHTMUNDO}"
        
        # Save the command that is just run
        echo $CMD >> mundo2logs/${LOGPREF}_${SPA}_${SPB}.cmd
        echo "Queuing command: $CMD"
        
-       sbatch -o mundo2logs/${LOGPREF}_${SPA}_${SPB}.log --mem 128000 --partition preempt --time=1-10:00:00 --job-name=isorank-${SPA}-${SPB} --partition=preempt $CMD
+       if [ -z $MODE ]
+       then
+            sbatch -o mundo2logs/${LOGPREF}_${SPA}_${SPB}.log --mem 128000 --partition preempt --time=1-10:00:00 --job-name=isorank-${SPA}-${SPB} --partition=preempt $CMD
+        else
+             $CMD
+             exit
+        fi
     done
 done
 

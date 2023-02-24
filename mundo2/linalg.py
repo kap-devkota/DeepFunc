@@ -8,4 +8,4 @@ def compute_k_svd(M, k):
     U, s, _ = linalg.svd(M)
     s = np.sqrt(s[:k])
     U = U[:, :k]
-    return np.matmul(U, s)
+    return np.multiply(U, s)

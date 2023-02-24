@@ -13,7 +13,8 @@ import argparse
 import os
 from mundo2.io_utils import compute_adjacency, compute_pairs
 from mundo2.isorank import compute_isorank_and_save
-from mundo2.predict_score import topk_accs, compute_metric, dsd_func, dsd_func_mundo
+from mundo2.predict_score import topk_accs, compute_metric, dsd_func, dsd_func_mundo, scoring_fcn
+from sklearn.metrics import average_precision_score, roc_auc_score, precision_recall_curve
 import re
 import pandas as pd
 
@@ -72,7 +73,7 @@ def getargs():
     return parser.parse_args()
 
 
-def get_scoring(metric):
+def get_scoring(metric, all_go_labels = None, **kwargs):
     acc = re.compile(r'top-([0-9]+)-acc')
     match_acc = acc.match(metric)
     if match_acc:
@@ -82,8 +83,19 @@ def get_scoring(metric):
             return topk_accs(prots, pred_go_map, true_go_map, k=k)
 
         return score
-    return None
-
+    else:
+        if metric == "aupr":
+            met = average_precision_score
+        elif metric == "auc":
+            met = roc_auc_score
+        elif metric == "f1max":
+            def f1max(true, pred):
+                pre, rec, _ = precision_recall_curve(true, pred)
+                f1 = (2 * pre * rec) / (pre + rec + 1e-7)
+                return np.max(f1)
+            met = f1max
+        sfunc = scoring_fcn(all_go_labels, met, **kwargs)
+    return sfunc
 
 def compute_dsd_dist(ppifile, dsdfile, jsonfile, threshold=-1, **kwargs):
     assert (os.path.exists(ppifile)) or (os.path.exists(dsdfile) and os.path.exists(jsonfile))
@@ -115,6 +127,17 @@ def compute_munk(src_dsd: np.ndarray,
                  src_node_map: Dict[str, int],
                  tar_node_map: Dict[str, int],
                  landmarks: List[Tuple[str, str]]) -> np.ndarray:
+    """
+    Given source dsd D_A, target dsd D_B, D_A = S_A @ S_A, D_B = S_B @ S_B. Landmarks := L
+    1) Get S_A
+    2) \hat{T}_B = (S_A[L])^{\dagger} @ S_B[L] @ S_B => m x l @ l x n @  n x n = m x n
+           motive:
+           S_B[L] = S_A[L] K, K = S_A[L]^{\dagger} S_B[L]
+           T_{A->B} = (S_A K) = S_A S_A[L]^{\dagger} S_B[L]
+    So, we should transform source to target.
+    3) M = S_A @ (S_A[L])^\dagger @ S_B[L] @ S_B
+           
+    """
     def rkhs(matrix: np.ndarray)-> np.ndarray:
         def is_symmetric(a: np.ndarray, rtol: float=1e-05, atol: float=1e-08) -> bool:
             return np.allclose(a, a.T, rtol=rtol, atol=atol)
@@ -126,11 +149,12 @@ def compute_munk(src_dsd: np.ndarray,
         eigenvalues, eigenvectors = eig(matrix)
         return eigenvectors @ np.diag(np.sqrt(eigenvalues))
 
-    def embed_matrices(source_rkhs: np.ndarray,
-                       target_diff: np.ndarray,
+    def embed_matrices(source_rkhs: np.ndarray, # Source : m x m 
+                       target_diff: np.ndarray, # Target : n x n
                        landmark_id: List[Tuple[int, int]]) -> np.ndarray:
         s_landmark_id, t_landmark_id = zip(*landmark_id)
-        return pinv(source_rkhs[s_landmark_id, :]) @ (target_diff[t_landmark_id, :])
+        return pinv(source_rkhs[s_landmark_id, :]) @ (target_diff[t_landmark_id, :]) # (SA_L)^{\dagger} @ SB_L @ SB
+    # (m x L) @ (L x n) => m x n
 
     landmark_indices = [(src_node_map[landmark[0]], tar_node_map[landmark[1]]) for landmark in landmarks]
     print('Computing RKHS for source network... ')
@@ -138,8 +162,9 @@ def compute_munk(src_dsd: np.ndarray,
     print('Embedding matrices... ')
     target_rkhs_hat = embed_matrices(source_rkhs, tar_dsd, landmark_indices)
     print('Creating final munk matrix... ')
-    munk_matrix = np.dot(source_rkhs, target_rkhs_hat).T
+    munk_matrix = np.dot(source_rkhs, target_rkhs_hat).T # ((m x m) x (m x n)).T => n x m
     return munk_matrix
+# Target is moved to source and then we compute the dot product
 
 
 def get_go_maps(nmap, gofile, gotype):
@@ -151,13 +176,15 @@ def get_go_maps(nmap, gofile, gotype):
     gomaps = df.loc[:, ["GO", "swissprot"]].groupby("swissprot", as_index=False).aggregate(list)
     gomaps = gomaps.values
     go_outs = {}
+    all_gos = set()
     for prot, gos in gomaps:
         if prot in nmap:
+            all_gos.update(gos)
             go_outs[nmap[prot]] = set(gos)
     for i in range(len(nmap)):
         if i not in go_outs:
             go_outs[i] = {}
-    return go_outs
+    return go_outs, all_gos
 
 
 def main(args):
@@ -201,10 +228,11 @@ def main(args):
         gomapsA = {}
         gomapsB = {}
         for go in gos:
-            gomapsA[go] = get_go_maps(nmapA, args.go_A, go)
-            gomapsB[go] = get_go_maps(nmapB, args.go_B, go)
+            gomapsA[go], golabelsA = get_go_maps(nmapA, args.go_A, go)
+            gomapsB[go], golabelsB = get_go_maps(nmapB, args.go_B, go)
+            golabels = golabelsA.union(golabelsB)
             for metric in args.metrics.split(","):
-                score = get_scoring(metric)
+                score = get_scoring(metric, golabels)
                 for kA in kAs:
                     settings_dsd = settings + [go, metric, "dsd-knn", kA, -1]
                     scores, _ = compute_metric(dsd_func(DSDA, k=kA), score, list(range(len(nmapA))), gomapsA[go],

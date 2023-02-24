@@ -5,7 +5,7 @@ FILESB=(data/intact_output/bakers.s.tsv data/intact_output/human_sub.s.tsv)
 
 
 SPECIESA=(rat fly mouse)
-FILESA=(data/intact_output/rat.s.tsv data/intact_output/fly.s.tsv  data/intact_output/mouse.s.tsv)
+FILESA=(data/intact_output/rat.s.tsv data/intact_output/fly.s.tsv data/intact_output/mouse.s.tsv)
 
 KA="10,20,30,40,50"
 KB="10,20,30,40,50,100"
@@ -13,23 +13,23 @@ KB="10,20,30,40,50,100"
 THRES_DSD_DIST=10
 METRICS="top-1-acc,aupr,auc,f1max"
 
-OPFILE="outputs/outputs_munk.tsv"
 
-NOLANDMARKS=500
-WEIGHTMUNDO=0.66
-
-# (500, 0.2), (500, 0.6), (500, 0.8), (500, 1)
-
-# (200, x), (300, x), (400, x), (100, x), (750, x)
+SVDDIM=250
+NOLANDMARKS=50
+WEIGHTMUNDO=0.660
+OPFILE=outputs/outputs_m4.tsv
 MODE=
-while getopts "l:w:d" args
+NEPOCH=100
+while getopts "m:l:w:d" args
 do
     case $args in 
+        m) SVDDIM=${OPTARG}
+        ;;
         l) NOLANDMARKS=${OPTARG}
         ;;
         w) WEIGHTMUNDO=${OPTARG}
         ;;
-        d) KA="10"; KB="10";METRICS="f1max";MODE="-DEBUG";NOLANDMARKS=50;OPFILE="outputs${MODE}.tsv"
+        d) NEPOCH=100;KA="10"; KB="10";METRICS="f1max";MODE="-DEBUG";NOLANDMARKS=50;OPFILE="outputs${MODE}.tsv"
         ;;
     esac
 done
@@ -42,6 +42,7 @@ done
 
 
 LOGPREF=$(date | tr ' ' '-' | awk '{printf "log-%s",$0}')
+
 
 for i in $(seq 0 $((${#SPECIESB[@]} - 1)))
 do
@@ -57,12 +58,18 @@ do
        JSONB=mundo2data/${SPB}.json
        GOA=data/go/${SPA}.output.mapping.gaf 
        GOB=data/go/${SPB}.output.mapping.gaf 
-       MUNK=mundo2data/MUNK_${SPA}_${SPB}.npy
-
+       SVDA=mundo2data/SVD-${SPA}-${SVDDIM}.npy
+       SVDB=mundo2data/SVD-${SPB}-${SVDDIM}.npy
+       MODEL="mundo2data/SVD-MODEL-${SPB}->${SPA}-${SVDDIM}-${NOLANDMARKS}${MODE}.sav"
+       
        LANDMARK=data/intact_output/${SPA}-${SPB}.tsv
        if [ ! -f $LANDMARK ]; then LANDMARK=data/intact_output/${SPB}-${SPA}.tsv; fi
-              
-       CMD="./run_mundo_munk.py --ppiA ${PPIA} --ppiB ${PPIB} --nameA ${SPA} --nameB ${SPB} --dsd_A_dist ${DSDA} --dsd_B_dist ${DSDB} --thres_dsd_dist ${THRES_DSD_DIST} --json_A ${JSONA} --json_B ${JSONB} --landmarks_a_b ${LANDMARK} --no_landmarks ${NOLANDMARKS} --munk_matrix $MUNK --compute_go_eval --kA ${KA} --kB ${KB} --metrics ${METRICS} --output_file ${OPFILE} --go_A ${GOA} --go_B ${GOB} --compute_isorank --wB ${WEIGHTMUNDO}"
+       
+       
+       
+       #TRANSFORMEDB_A="mundo2data/SVD-TRANSFORMED-${SPB}->${SPA}-${SVDDIM}-${NOLANDMARKS}${MODE}.npy"
+       SVDDISTA_B="mundo2data/SVD-DIST-${SPA}->${SPB}-${SVDDIM}-${NOLANDMARKS}${MODE}.npy"
+       CMD="./run_mundo4.py --ppiA ${PPIA} --ppiB ${PPIB} --nameA ${SPA} --nameB ${SPB} --dsd_A_dist ${DSDA} --dsd_B_dist ${DSDB} --thres_dsd_dist ${THRES_DSD_DIST} --json_A ${JSONA} --json_B ${JSONB} --svd_A ${SVDA} --svd_B ${SVDB} --svd_r ${SVDDIM} --landmarks_a_b ${LANDMARK} --no_landmarks ${NOLANDMARKS} --model ${MODEL} --svd_dist_a_b ${SVDDISTA_B} --compute_go_eval --kA ${KA} --kB ${KB} --metrics ${METRICS} --output_file $OPFILE --go_A ${GOA} --go_B ${GOB} --no_epoch ${NEPOCH} --compute_isorank --wB ${WEIGHTMUNDO}"
        
        # Save the command that is just run
        echo $CMD >> mundo2logs/${LOGPREF}_${SPA}_${SPB}.cmd
@@ -70,10 +77,10 @@ do
        
        if [ -z $MODE ]
        then
-           sbatch -o mundo2logs/${LOGPREF}_${SPA}_${SPB}.log --mem 128000 --partition preempt --time=1-10:00:00 --job-name=isorank-${SPA}-${SPB} --partition=preempt $CMD
+            sbatch -o mundo2logs/${LOGPREF}_${SPA}_${SPB}.log --mem 128000 --partition preempt --time=1-10:00:00 --job-name=isorank-${SPA}-${SPB} --partition=preempt $CMD
         else
-            $CMD
-            exit
+             $CMD
+             exit
         fi
     done
 done

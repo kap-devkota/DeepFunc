@@ -7,19 +7,22 @@ import numpy as np
 import sys
 import json
 from scipy.spatial.distance import cdist, pdist, squareform
+from scipy.linalg import pinv
 import argparse
 import os
 import mundo2
 from mundo2.io_utils import compute_adjacency, compute_pairs
-from mundo2.data import Data
+from mundo2.data import Data, CuratedData
 from mundo2.model import AttentionModel
 from mundo2.isorank import compute_isorank_and_save
-from mundo2.predict_score import topk_accs, compute_metric, dsd_func, dsd_func_mundo
+from mundo2.predict_score import topk_accs, compute_metric, dsd_func, dsd_func_mundo, scoring_fcn
 from mundo2.linalg import compute_k_svd
 import re
 import pandas as pd
 from sklearn.manifold import Isomap
 import torch
+import sklearn 
+from sklearn.metrics import average_precision_score, roc_auc_score, precision_recall_curve
 import torch.nn as nn
 from torch.utils.data import DataLoader
 
@@ -56,16 +59,18 @@ def getargs():
     
     # MODEL
     parser.add_argument("--model", default = None, help = "Location of the trained model. If not provided, the trained model is saved at this location")
-    parser.add_argument("--transformed_a_b", default = None, help = "Location of the embeddings of A transformed to the space of B. If not given, the transformed embedding will be saved at this location")
-    parser.add_argument("--svd_dist_a_b", default = None, help = "Location of the SVD distance between A and transformed B. If not present, the distance will be created at this location")
+    parser.add_argument("--svd_dist_a_b", default = None, help = "Location of the SVD COSINE distance between A and transformed B. If not present, the distance will be created at this location")
+    parser.add_argument("--weight_decay", default=1e-6, type = float, help = "Weight decay for the model")
+    parser.add_argument("--no_epoch", default = 20, type = int, help = "The number of epochs")
     
     # Evaluation
     parser.add_argument("--compute_go_eval", default = False, action = "store_true", help = "Compute GO functional evaluation on the model?")
     parser.add_argument("--kA", default = "10,15,20,25,30", help = "Comma seperated values of kA to test")
     parser.add_argument("--kB", default = "10,15,20,25,30", help = "Comma seperated values of kB to test")
-    parser.add_argument("--metrics", default="top-1-acc,", help = "Comma separated metrics to test on")
+    parser.add_argument("--metrics", default="top-1-acc,aupr,f1max", help = "Comma separated metrics to test on")
     parser.add_argument("--wB", default = 0.4, type = float)
     parser.add_argument("--output_file", help = "Output tsv scores file")
+    parser.add_argument("--compute_dsd", help = "Compute the DSD file", action = "store_true", default = False)
     
     # GO files
     parser.add_argument("--go_A", default = None, help = "GO files for species A in TSV format")
@@ -74,7 +79,7 @@ def getargs():
     return parser.parse_args()
 
 
-def get_scoring(metric):
+def get_scoring(metric, all_go_labels = None, **kwargs):
     acc = re.compile(r'top-([0-9]+)-acc')
     match_acc = acc.match(metric)
     if match_acc:
@@ -82,7 +87,20 @@ def get_scoring(metric):
         def score(prots, pred_go_map, true_go_map):
             return topk_accs(prots, pred_go_map, true_go_map, k = k)
         return score
-    return None
+    else:
+        if metric == "aupr":
+            met = average_precision_score
+        elif metric == "auc":
+            met = roc_auc_score
+        elif metric == "f1max":
+            def f1max(true, pred):
+                pre, rec, _ = precision_recall_curve(true, pred)
+                f1 = (2 * pre * rec) / (pre + rec + 1e-7)
+                return np.max(f1)
+            met = f1max
+        sfunc = scoring_fcn(all_go_labels, met, **kwargs)
+    return sfunc
+
 
 
 def compute_dsd_dist(ppifile, dsdfile, jsonfile, threshold = -1, **kwargs):
@@ -125,30 +143,63 @@ def compute_svd(svdfile, dsddist, svd_r = 100, **kwargs):
             np.save(svdfile, SVDemb)
         return SVDemb
 
+def linear_munk(svdA, svdB, no_matches, isorankfile, mapA, mapB):
+    """
+    svdA = nA x d
+    svdB = nB x d
+    """
+    df = pd.read_csv(isorankfile, sep = "\t")
+    df.iloc[:, 0] = df.iloc[:, 0].apply(lambda x : mapA[x])
+    df.iloc[:, 1] = df.iloc[:, 1].apply(lambda x : mapB[x])
+    matches = df.loc[:no_matches, :].values
+    
+    svdA_l  = svdA[matches[:, 0]] # match x d
+    svdB_l  = svdB[matches[:, 1]] # match x d
+    tb_to_a = svdB @ pinv(svdB_l) @ svdA_l # [nA, d] @ [d , match] @ [match, d]
+    # y = Ax  + nonlinear
+    # y = mod(x)
+    # y = Ax + mod(x)
+    # input = x, expected = y - Ax
+    loss = svdA_l - tb_to_a[matches[:, 1]]
+    munk = svdA @ tb_to_a.T
+    return munk, loss, svdB_l, svdA_l
+    
+     
     
 def train_model_and_project(modelfile, svdA, svdB, isorankfile, no_matches, protAmap, protBmap, **kwargs):
-    # A is moved to B, not the opposite
+    # B is moved to A
     assert os.path.exists(modelfile) or (svdA is not None and svdB is not None)
-    svdAtorch = torch.tensor(svdA, dtype = torch.float32).unsqueeze(-1)
+    
+    munk, loss, svdB_l, svdA_l = linear_munk(svdA, 
+                                                svdB,
+                                                no_matches,
+                                                isorankfile,
+                                                protAmap,
+                                                protBmap)
+    
+    svdBtorch = torch.tensor(svdB, dtype = torch.float32).unsqueeze(-1)
     print(f"[!] {kwargs['msg']}")
     if os.path.exists(modelfile):
         model = torch.load(modelfile, map_location = "cpu")
         model.eval()
         with torch.no_grad():
-            return model(svdAtorch).squeeze().numpy()
+            svdBnl = model(svdBtorch).squeeze().numpy()
+            return munk + svdA @ svdBnl.T
     else:
-        data = Data(isorankfile, no_matches, svdB, svdA, protBmap, protAmap, rev = True) # A moved to B
+        data = CuratedData(loss, svdB_l) #y, x 
         trainloader = DataLoader(data, shuffle = True, batch_size = 10)
         loss_fn = nn.MSELoss()
         model = AttentionModel()
         model.train()
-        optim = torch.optim.Adam(model.parameters(), lr = 0.001)
-        ep = 100
+        optim = torch.optim.Adam(model.parameters(), 
+                                 lr = 0.001,
+                                weight_decay = kwargs["weight_decay"])
+        ep = kwargs["no_epoch"]
         print(f"[!]\t Training the Attention Model:")
         for e in range(ep):
             loss = 0
             for i, data in enumerate(trainloader):
-                y, x = data # y is the embedding for species B (source). x is the embedding for species A (target). Model here moves target to source.
+                y, x = data # y is the embedding for species A (target). x is the embedding for species B (source). Model here moves source to target.
                 optim.zero_grad()
                 yhat = model(x)
                 closs = loss_fn(y, yhat)
@@ -156,14 +207,14 @@ def train_model_and_project(modelfile, svdA, svdB, isorankfile, no_matches, prot
                 optim.step()
                 loss += closs.item()
             loss = loss / (i+1)
-            if e % 10 == 0:
-                print(f"[!]\t\t Epoch {e+1}: Loss : {loss}")
+            print(f"[!]\t\t Epoch {e+1}: Loss : {loss}")
         if modelfile is not None:
             torch.save(model, modelfile)
         model.eval()
         with torch.no_grad():
-            # model here transforms the complete target to source
-            return model(svdAtorch).squeeze().detach().numpy() 
+            # model here transforms the complete source to target
+            svdBnl = model(svdBtorch).squeeze().detach().numpy() 
+            return munk + svdA @ svdBnl.T 
 
     
 def get_go_maps(nmap, gofile, gotype):
@@ -175,13 +226,15 @@ def get_go_maps(nmap, gofile, gotype):
     gomaps = df.loc[:, ["GO", "swissprot"]].groupby("swissprot", as_index = False).aggregate(list)
     gomaps = gomaps.values
     go_outs = {}
+    all_gos = set()
     for prot, gos in gomaps:
         if prot in nmap:
+            all_gos.update(gos)
             go_outs[nmap[prot]] = set(gos)
     for i in range(len(nmap)):
         if i not in go_outs:
             go_outs[i] = {}
-    return go_outs
+    return go_outs, all_gos
     
 def main(args):
     """
@@ -200,29 +253,31 @@ def main(args):
     if args.svd_dist_a_b is not None and os.path.exists(args.svd_dist_a_b):
         print("[!] SVD transformed distances between species A and B already computed")
         DISTS = np.load(args.svd_dist_a_b)
-    elif args.transformed_a_b is not None and os.path.exists(args.transformed_a_b):
-        SVDA_B = np.load(args.transformed_a_b)
-        print("[!] Computing the SVD transformed distances between species A and B.")
-        DISTS  = SVDA_B @ SVDB.T 
-        if args.svd_dist_a_b is not None:
-            np.save(args.svd_dist_a_b, DISTS)
     else:
-        if args.compute_isorank:
-            isorank_file = f"{args.nameA}_{args.nameB}_isorank_alpha_{args.isorank_alpha}.tsv"
-            compute_isorank_and_save(args.ppiA, args.ppiB, args.nameA, args.nameB,
+        isorank_file = f"{args.nameA}_{args.nameB}_isorank_alpha_{args.isorank_alpha}_N_{args.no_landmarks}.tsv"
+        print(f"[!] Looking for the file {isorank_file}: {os.path.exists(isorank_file)}")
+        if args.compute_isorank and not os.path.exists(isorank_file):
+            compute_isorank_and_save(args.ppiA, 
+                                     args.ppiB, 
+                                     args.nameA, 
+                                     args.nameB,
                                      matchfile = args.landmarks_a_b,
                                      alpha = args.isorank_alpha,
-                                    n_align = args.no_landmarks, save_loc = isorank_file,
-                                    msg = "Running ISORANK.")
-        else:
+                                     n_align = args.no_landmarks, 
+                                     save_loc = isorank_file,
+                                     msg = "Running ISORANK.")
+        elif not args.compute_isorank:
             isorank_file = args.landmarks_a_b
-        SVDA_B = train_model_and_project(args.model, SVDA, SVDB, isorank_file, 
-                                         args.no_landmarks, nmapA, nmapB, msg = "Training the Attention Model and Projecting the SVD embeddings of Species B")
-        if args.transformed_a_b is not None:
-            np.save(args.transformed_a_b, SVDA_B)
+        train_kwargs = {"no_epoch" : args.no_epoch, 
+                        "weight_decay" : args.weight_decay}
         
-        print("[!] Computing the SVD transformed dot product between species A and B.")
-        DISTS = SVDA_B @ SVDB.T # m x n
+        DISTS = train_model_and_project(args.model, 
+                                         SVDA, SVDB, isorank_file, 
+                                         args.no_landmarks, 
+                                         nmapA, nmapB, 
+                                         msg = "Training the Attention Model and Computing the distances",
+                                        **train_kwargs)
+        
         if args.svd_dist_a_b is not None:
             np.save(args.svd_dist_a_b, DISTS)
             
@@ -240,18 +295,21 @@ def main(args):
         gomapsA = {}
         gomapsB = {}
         for go in gos:
-            gomapsA[go] = get_go_maps(nmapA, args.go_A, go)
-            gomapsB[go] = get_go_maps(nmapB, args.go_B, go)
+            gomapsA[go], golabelsA = get_go_maps(nmapA, args.go_A, go)
+            gomapsB[go], golabelsB = get_go_maps(nmapB, args.go_B, go)
+            golabels = golabelsA.union(golabelsB)
+            print(f"GO count: {go} ---- {len(golabels)}")
             for metric in args.metrics.split(","):
-                score = get_scoring(metric)
+                score = get_scoring(metric, golabels)
                 for kA in kAs:
-                    settings_dsd = settings + [go, metric, "dsd-knn", kA, -1]
-                    scores, _ = compute_metric(dsd_func(DSDA, k=kA), score, list(range(len(nmapA))), gomapsA[go], kfold = 5)
-                    print(f"GO: {go}, DSD, k: {kA} ===> {np.average(scores):0.3f} +- {np.std(scores):0.3f}")
-                    settings_dsd += [np.average(scores), np.std(scores)]
-                    results.append(settings_dsd)
+                    if args.compute_dsd:
+                        settings_dsd = settings + [go, metric, "dsd-knn", kA, -1]
+                        scores, _ = compute_metric(dsd_func(DSDA, k=kA), score, list(range(len(nmapA))), gomapsA[go], kfold = 5)
+                        print(f"GO: {go}, DSD, k: {kA} ===> {np.average(scores):0.3f} +- {np.std(scores):0.3f}")
+                        settings_dsd += [np.average(scores), np.std(scores)]
+                        results.append(settings_dsd)
                     for kB in kBs:
-                        settings_mundo = settings + [go, metric, f"mundo3-knn-weight-{args.wB:0.3f}", kA, kB]
+                        settings_mundo = settings + [go, metric, f"mundo4-knn-weight-{args.wB:0.3f}", kA, kB]
                         scores, _ = compute_metric(dsd_func_mundo(DSDA, DISTS, gomapsB[go], k=kA, k_other=kB, weight_other = args.wB),
                                                   score, list(range(len(nmapA))), gomapsA[go], kfold = 5)
                         settings_mundo += [np.average(scores), np.std(scores)]

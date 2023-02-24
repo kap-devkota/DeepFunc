@@ -31,10 +31,24 @@ class MHA(nn.Module):
 class AttentionModel(nn.Module):
     def __init__(self):
         super(AttentionModel, self).__init__()
-        self.mha1 = MHA(10, 4, 1, 4, activation = "sigmoid")
-        self.layer = nn.LayerNorm(4)
-        self.mha2 = MHA(5, 3, 4, 1)
+        self.proj1 = nn.Linear(1, 4) 
+        self.mha1  = nn.MultiheadAttention(4, 2, batch_first = True)
+        self.drop1 = nn.Dropout(p=0.2)
+        self.act   = torch.tanh
+        self.mha2  = nn.MultiheadAttention(4, 2, batch_first = True)
+        self.proj2 = nn.Linear(4, 1)
+        
     def forward(self, x):
-        out = self.mha1(x)
-        out = self.layer(out)
-        return self.mha2(out)
+        """
+        input : batch x nseq x 1
+        => batch x nseq x 10
+        => batch x nseq x 10
+        => batch x nseq x 10
+        => batch x nseq x 1
+        """
+        out = self.drop1(self.act(self.proj1(x)))
+        out = out + self.mha1(out, out, out)[0]
+        out = self.act(out)
+        out = out + self.mha2(out, out, out)[0]
+        out = self.act(out)
+        return self.proj2(out)

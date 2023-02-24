@@ -1,6 +1,39 @@
 import pandas as pd
 import numpy as np
 
+"""
+Scoring functions
+"""
+def _met(golists = {}, go = None, all_go_labels = None, metric = None, **kwargs):
+    if len(golists) == 0 or all_go_labels == None or metric == None:
+        return None
+    
+    assert callable(metric)
+    
+    if go == None or len(go) == 0:
+        return 0
+    
+    godiff = list(all_go_labels.difference(go)) # add the rest of go labels
+    goall  = go + godiff
+    gopred = np.concatenate([np.linspace(1, 0.5, len(go)), np.zeros(len(godiff),)])
+    gotrue = [1 if go in golists else 0 for go in goall]
+    sc = metric(gotrue, gopred, **kwargs)
+    
+    return sc
+    
+def _mets(prots, pred_go_map, true_go_map, all_go_labels, metric, **kwargs):
+    scores = [_met(true_go_map[p], pred_go_map[p], all_go_labels, metric, **kwargs) 
+             for p in prots]
+    scores = list(filter(lambda x: x is not None, scores))
+    return np.average(scores)
+
+
+def scoring_fcn(all_go_labels, metric, **kwargs):
+    assert metric is not None and all_go_labels is not None
+    def scfunc(prots, pred_go_map, true_go_map):
+        return _mets(prots, pred_go_map, true_go_map, all_go_labels, metric, **kwargs)
+    return scfunc
+    
 
 def topk_acc(golists = {}, go = None, k = 1):
     if len(golists) == 0:
