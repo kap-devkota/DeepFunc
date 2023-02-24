@@ -82,7 +82,6 @@ def get_scoring(metric):
         return score
     return None
 
-
 def compute_dsd_dist(ppifile, dsdfile, jsonfile, threshold = -1, **kwargs):
     assert (os.path.exists(ppifile)) or (os.path.exists(dsdfile) and os.path.exists(jsonfile))
     print(f"[!] {kwargs['msg']}")
