@@ -107,7 +107,6 @@ def compute_dsd_dist(ppifile, dsdfile, jsonfile, threshold = -1, **kwargs):
             DSDdist = np.where(DSDdist > threshold, threshold, DSDdist)
         return DSDdist, protmap
     
-    
 def compute_mds(mdsfile, dsddist, mds_r = 100, **kwargs):
     assert os.path.exists(mdsfile) or dsddist is not None
     print(f"[!] {kwargs['msg']}")

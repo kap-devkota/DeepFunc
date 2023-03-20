@@ -1,0 +1,1 @@
+python -m dscript predict --model dscript/models/topsy_turvy_v1.sav -d 0 -o data/output --seqs data/seqs/yeast_trim.fasta --pairs data/pairs/yeast_possible_candidates.tsv

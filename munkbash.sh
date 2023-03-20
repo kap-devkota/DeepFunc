@@ -1,11 +1,18 @@
 #!/bin/bash
 
-SPECIESB=(bakers human)
-FILESB=(data/intact_output/bakers.s.tsv data/intact_output/human_sub.s.tsv)
+# SPECIESB=(bakers human)
+# FILESB=(data/intact_output/bakers.s.tsv data/intact_output/human_sub.s.tsv)
 
 
-SPECIESA=(rat fly mouse)
-FILESA=(data/intact_output/rat.s.tsv data/intact_output/fly.s.tsv  data/intact_output/mouse.s.tsv)
+# SPECIESA=(rat fly mouse)
+# FILESA=(data/intact_output/rat.s.tsv data/intact_output/fly.s.tsv  data/intact_output/mouse.s.tsv)
+
+SPECIESB=(yeastPlus)
+FILESB=(data/intact_output/bakers_add.s.tsv)
+
+
+SPECIESA=(fly)
+FILESA=(data/intact_output/fly.s.tsv)
 
 KA="10,20,30,40,50"
 KB="10,20,30,40,50,100"
@@ -51,8 +58,8 @@ do
        SPB=${SPECIESB[i]}
        PPIA=${FILESA[j]}
        PPIB=${FILESB[i]}
-       DSDA=mundo2data/DSD-DIST-${SPA}.npy
-       DSDB=mundo2data/DSD-DIST-${SPB}.npy
+       DSDA=mundo2data/${SPA}-dsd-dist.npy
+       DSDB=mundo2data/${SPB}-dsd-dist.npy
        JSONA=mundo2data/${SPA}.json
        JSONB=mundo2data/${SPB}.json
        GOA=data/go/${SPA}.output.mapping.gaf 
@@ -62,7 +69,7 @@ do
        LANDMARK=data/intact_output/${SPA}-${SPB}.tsv
        if [ ! -f $LANDMARK ]; then LANDMARK=data/intact_output/${SPB}-${SPA}.tsv; fi
               
-       CMD="./run_mundo_munk.py --ppiA ${PPIA} --ppiB ${PPIB} --nameA ${SPA} --nameB ${SPB} --dsd_A_dist ${DSDA} --dsd_B_dist ${DSDB} --thres_dsd_dist ${THRES_DSD_DIST} --json_A ${JSONA} --json_B ${JSONB} --landmarks_a_b ${LANDMARK} --no_landmarks ${NOLANDMARKS} --munk_matrix $MUNK --compute_go_eval --kA ${KA} --kB ${KB} --metrics ${METRICS} --output_file ${OPFILE} --go_A ${GOA} --go_B ${GOB} --compute_isorank --wB ${WEIGHTMUNDO}"
+       CMD="python run_mundo_munk.py --ppiA ${PPIA} --ppiB ${PPIB} --nameA ${SPA} --nameB ${SPB} --dsd_A_dist ${DSDA} --dsd_B_dist ${DSDB} --thres_dsd_dist ${THRES_DSD_DIST} --json_A ${JSONA} --json_B ${JSONB} --landmarks_a_b ${LANDMARK} --no_landmarks ${NOLANDMARKS} --munk_matrix $MUNK --compute_go_eval --kA ${KA} --kB ${KB} --metrics ${METRICS} --output_file ${OPFILE} --go_A ${GOA} --go_B ${GOB} --compute_isorank --wB ${WEIGHTMUNDO}"
        
        # Save the command that is just run
        echo $CMD >> mundo2logs/${LOGPREF}_${SPA}_${SPB}.cmd

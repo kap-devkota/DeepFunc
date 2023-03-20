@@ -1,0 +1,4 @@
+[2023-03-09-17:11:36] Using CUDA device 0 - NVIDIA GeForce RTX 3080
+[2023-03-09-17:11:36] Loading model from dscript/models/topsy_turvy_v1.sav
+[2023-03-09-17:11:36] Loading pairs from dscript/models/topsy_turvy_v1.sav
+[2023-03-09-17:11:36] Generating Embeddings...
