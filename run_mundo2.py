@@ -13,10 +13,11 @@ from mundo2.io_utils import compute_adjacency, compute_pairs
 from mundo2.data import Data
 from mundo2.model import AttentionModel
 from mundo2.isorank import compute_isorank_and_save
-from mundo2.predict_score import topk_accs, compute_metric, dsd_func, dsd_func_mundo
+from mundo2.predict_score import topk_accs, compute_metric, dsd_func, dsd_func_mundo, scoring_fcn
 import re
 import pandas as pd
 from sklearn.manifold import Isomap
+from sklearn.metrics import average_precision_score, roc_auc_score, precision_recall_curve
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
@@ -72,7 +73,7 @@ def getargs():
     return parser.parse_args()
 
 
-def get_scoring(metric):
+def get_scoring(metric, all_go_labels = None, **kwargs):
     acc = re.compile(r'top-([0-9]+)-acc')
     match_acc = acc.match(metric)
     if match_acc:
@@ -80,7 +81,19 @@ def get_scoring(metric):
         def score(prots, pred_go_map, true_go_map):
             return topk_accs(prots, pred_go_map, true_go_map, k = k)
         return score
-    return None
+    else:
+        if metric == "aupr":
+            met = average_precision_score
+        elif metric == "auc":
+            met = roc_auc_score
+        elif metric == "f1max":
+            def f1max(true, pred):
+                pre, rec, _ = precision_recall_curve(true, pred)
+                f1 = (2 * pre * rec) / (pre + rec + 1e-7)
+                return np.max(f1)
+            met = f1max
+        sfunc = scoring_fcn(all_go_labels, met, **kwargs)
+    return sfunc
 
 def compute_dsd_dist(ppifile, dsdfile, jsonfile, threshold = -1, **kwargs):
     assert (os.path.exists(ppifile)) or (os.path.exists(dsdfile) and os.path.exists(jsonfile))

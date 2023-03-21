@@ -1,17 +1,17 @@
 #!/bin/bash
 
-SPECIESB=(human bakers)
-FILESB=(data/intact_output/human_sub.s.tsv data/intact_output/bakers.s.tsv)
+SPECIESB=(rat)
+FILESB=(data/intact_output/rat.s.tsv)
 
 
-SPECIESA=(fly rat mouse)
-FILESA=(data/intact_output/fly.s.tsv data/intact_output/rat.s.tsv data/intact_output/mouse.s.tsv)
+SPECIESA=(bakers fly mouse)
+FILESA=(data/intact_output/bakers.s.tsv  data/intact_output/fly.s.tsv data/intact_output/mouse.s.tsv)
 
 KA="10,20,30,40,50"
 KB="10,20,30,40,50,100"
 
 THRES_DSD_DIST=10
-METRICS="top-1-acc,top-5-acc"
+METRICS="top-1-acc,aupr,auc,f1max"
 
 
 MDSDIM=100
@@ -56,22 +56,20 @@ do
        GOB=data/go/${SPB}.output.mapping.gaf 
        MDSA=mundo2data/ISOMAP-${SPA}-${MDSDIM}.npy
        MDSB=mundo2data/ISOMAP-${SPB}-${MDSDIM}.npy
-       MODEL="mundo2data/MODEL-${SPB}->${SPA}-${MDSDIM}-${NOLANDMARKS}.sav"
+       MODEL="mundo2data/MODEL-${SPB}-${SPA}-${MDSDIM}-${NOLANDMARKS}.sav"
        
        LANDMARK=data/intact_output/${SPA}-${SPB}.tsv
        if [ ! -f $LANDMARK ]; then LANDMARK=data/intact_output/${SPB}-${SPA}.tsv; fi
        
-       
-       
-       TRANSFORMEDB_A="mundo2data/TRANSFORMED-${SPB}->${SPA}-${MDSDIM}-${NOLANDMARKS}.npy"
-       MDSDISTA_B="mundo2data/MDS-DIST-${SPB}->${SPA}-${MDSDIM}-${NOLANDMARKS}.npy"
+       TRANSFORMEDB_A="mundo2data/TRANSFORMED-${SPB}-${SPA}-${MDSDIM}-${NOLANDMARKS}.npy"
+       MDSDISTA_B="mundo2data/MDS-DIST-${SPB}-${SPA}-${MDSDIM}-${NOLANDMARKS}.npy"
        CMD="./run_mundo2.py --ppiA ${PPIA} --ppiB ${PPIB} --nameA ${SPA} --nameB ${SPB} --dsd_A_dist ${DSDA} --dsd_B_dist ${DSDB} --thres_dsd_dist ${THRES_DSD_DIST} --json_A ${JSONA} --json_B ${JSONB} --mds_A ${MDSA} --mds_B ${MDSB} --mds_r ${MDSDIM} --landmarks_a_b ${LANDMARK} --no_landmarks ${NOLANDMARKS} --model ${MODEL} --transformed_b_a ${TRANSFORMEDB_A} --mds_dist_a_b ${MDSDISTA_B} --compute_go_eval --kA ${KA} --kB ${KB} --metrics ${METRICS} --output_file outputs.tsv --go_A ${GOA} --go_B ${GOB} --compute_isorank --wB ${WEIGHTMUNDO}"
        
        # Save the command that is just run
-       echo $CMD >> mundo2logs/${LOGPREF}_${SPA}_${SPB}.cmd
+       # echo $CMD >> mundo2logs/base_${SPA}_${SPB}.cmd
        echo "Queuing command: $CMD"
        
-       sbatch -o mundo2logs/${LOGPREF}_${SPA}_${SPB}.log --mem 128000 --partition preempt --time=1-10:00:00 --job-name=isorank-${SPA}-${SPB} --partition=preempt $CMD
+       sbatch -o mundo2logs/baseline_${SPA}_${SPB}.log --mem 128000 --partition preempt --time=1-10:00:00 --job-name=isorank-${SPA}-${SPB} --partition=preempt $CMD
     done
 done
 
