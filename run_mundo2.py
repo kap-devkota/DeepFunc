@@ -183,13 +183,15 @@ def get_go_maps(nmap, gofile, gotype):
     gomaps = df.loc[:, ["GO", "swissprot"]].groupby("swissprot", as_index = False).aggregate(list)
     gomaps = gomaps.values
     go_outs = {}
+    all_gos = set()
     for prot, gos in gomaps:
         if prot in nmap:
+            all_gos.update(gos)
             go_outs[nmap[prot]] = set(gos)
     for i in range(len(nmap)):
         if i not in go_outs:
             go_outs[i] = {}
-    return go_outs
+    return go_outs, all_gos
     
 def main(args):
     """
@@ -248,10 +250,11 @@ def main(args):
         gomapsA = {}
         gomapsB = {}
         for go in gos:
-            gomapsA[go] = get_go_maps(nmapA, args.go_A, go)
-            gomapsB[go] = get_go_maps(nmapB, args.go_B, go)
+            gomapsA[go], golabelsA = get_go_maps(nmapA, args.go_A, go)
+            gomapsB[go], golabelsB = get_go_maps(nmapB, args.go_B, go)
+            golabels = golabelsA.union(golabelsB)
             for metric in args.metrics.split(","):
-                score = get_scoring(metric)
+                score = get_scoring(metric, golabels)
                 for kA in kAs:
                     settings_dsd = settings + [go, metric, "dsd-knn", kA, -1]
                     scores, _ = compute_metric(dsd_func(DSDA, k=kA), score, list(range(len(nmapA))), gomapsA[go], kfold = 5)
