@@ -1,24 +1,24 @@
 #!/bin/bash
 
-# SPECIESB=(bakers human)
-# FILESB=(data/intact_output/bakers.s.tsv data/intact_output/human_sub.s.tsv)
+SPECIESB=(rat)
+FILESB=(data/intact_output/rat.s.tsv data/intact_output/human_sub.s.tsv)
 
 
-# SPECIESA=(rat fly mouse)
-# FILESA=(data/intact_output/rat.s.tsv data/intact_output/fly.s.tsv  data/intact_output/mouse.s.tsv)
+SPECIESA=(bakers fly mouse)
+FILESA=(data/intact_output/bakers.s.tsv data/intact_output/fly.s.tsv  data/intact_output/mouse.s.tsv)
 
-SPECIESB=(yeastPlus)
-FILESB=(data/intact_output/bakers_add.s.tsv)
+#SPECIESB=(yeastPlus)
+#FILESB=(data/intact_output/bakers_add.s.tsv)
 
 
-SPECIESA=(fly)
-FILESA=(data/intact_output/fly.s.tsv)
+#SPECIESA=(fly)
+#FILESA=(data/intact_output/fly.s.tsv)
 
-KA="10,20,30,40,50"
+KA="0,10,20"
 KB="10,20,30,40,50,100"
 
 THRES_DSD_DIST=10
-METRICS="top-1-acc,aupr,auc,f1max"
+METRICS="top-1-acc,aupr,f1max"
 
 OPFILE="outputs/outputs_munk.tsv"
 
@@ -58,8 +58,8 @@ do
        SPB=${SPECIESB[i]}
        PPIA=${FILESA[j]}
        PPIB=${FILESB[i]}
-       DSDA=mundo2data/${SPA}-dsd-dist.npy
-       DSDB=mundo2data/${SPB}-dsd-dist.npy
+       DSDA=mundo2data/DSD-DIST-${SPA}.npy
+       DSDB=mundo2data/DSD-DIST-${SPB}.npy
        JSONA=mundo2data/${SPA}.json
        JSONB=mundo2data/${SPB}.json
        GOA=data/go/${SPA}.output.mapping.gaf 
@@ -69,15 +69,15 @@ do
        LANDMARK=data/intact_output/${SPA}-${SPB}.tsv
        if [ ! -f $LANDMARK ]; then LANDMARK=data/intact_output/${SPB}-${SPA}.tsv; fi
               
-       CMD="python run_mundo_munk.py --ppiA ${PPIA} --ppiB ${PPIB} --nameA ${SPA} --nameB ${SPB} --dsd_A_dist ${DSDA} --dsd_B_dist ${DSDB} --thres_dsd_dist ${THRES_DSD_DIST} --json_A ${JSONA} --json_B ${JSONB} --landmarks_a_b ${LANDMARK} --no_landmarks ${NOLANDMARKS} --munk_matrix $MUNK --compute_go_eval --kA ${KA} --kB ${KB} --metrics ${METRICS} --output_file ${OPFILE} --go_A ${GOA} --go_B ${GOB} --compute_isorank --wB ${WEIGHTMUNDO}"
+       CMD="./run_mundo_munk.py --ppiA ${PPIA} --ppiB ${PPIB} --nameA ${SPA} --nameB ${SPB} --dsd_A_dist ${DSDA} --dsd_B_dist ${DSDB} --thres_dsd_dist ${THRES_DSD_DIST} --json_A ${JSONA} --json_B ${JSONB} --landmarks_a_b ${LANDMARK} --no_landmarks ${NOLANDMARKS} --munk_matrix $MUNK --compute_go_eval --kA ${KA} --kB ${KB} --metrics ${METRICS} --output_file ${OPFILE} --go_A ${GOA} --go_B ${GOB} --compute_isorank --wB ${WEIGHTMUNDO}"
        
        # Save the command that is just run
-       echo $CMD >> mundo2logs/${LOGPREF}_${SPA}_${SPB}.cmd
+       #echo $CMD >> mundo2logs/${LOGPREF}_${SPA}_${SPB}.cmd
        echo "Queuing command: $CMD"
        
        if [ -z $MODE ]
        then
-           sbatch -o mundo2logs/${LOGPREF}_${SPA}_${SPB}.log --mem 128000 --partition preempt --time=1-10:00:00 --job-name=isorank-${SPA}-${SPB} --partition=preempt $CMD
+           sbatch -o mundo2logs/MUNK_baseline_${SPA}_${SPB}.log --mem 128000 --partition preempt --time=1-10:00:00 --job-name=isorank-${SPA}-${SPB} --partition=preempt $CMD
         else
             $CMD
             exit

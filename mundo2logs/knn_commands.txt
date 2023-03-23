@@ -1,0 +1,48 @@
+log-Tue-Mar-21-12:54:57-EDT-2023
+./get_knn.py --ppi data/intact_output/bakers.s.tsv --name bakers --dsd mundo2data/DSD-DIST-bakers.npy --num_neighbors 5 --json mundo2data/bakers.json --thres_dsd_dist 10
+log-Tue-Mar-21-12:55:56-EDT-2023
+./get_knn.py --ppi data/intact_output/bakers.s.tsv --name bakers --dsd mundo2data/DSD-DIST-bakers.npy --num_neighbors 5 --json mundo2data/bakers.json --thres_dsd_dist 10
+log-Tue-Mar-21-12:57:53-EDT-2023
+./get_knn.py --ppi data/intact_output/bakers.s.tsv --name bakers --dsd mundo2data/DSD-DIST-bakers.npy --num_neighbors 5 --json mundo2data/bakers.json --thres_dsd_dist 10
+log-Tue-Mar-21-13:01:33-EDT-2023
+./get_knn.py --ppi data/intact_output/bakers.s.tsv --name bakers --dsd mundo2data/DSD-DIST-bakers.npy --num_neighbors 5 --json mundo2data/bakers.json --thres_dsd_dist 10
+log-Tue-Mar-21-13:15:00-EDT-2023
+./get_knn.py --ppi data/intact_output/bakers.s.tsv --name bakers --dsd mundo2data/DSD-DIST-bakers.npy --num_neighbors 5 --json mundo2data/bakers.json --thres_dsd_dist 10
+log-Tue-Mar-21-13:20:07-EDT-2023
+./get_knn.py --ppi data/intact_output/bakers.s.tsv --name bakers --dsd mundo2data/DSD-DIST-bakers.npy --num_neighbors 5 --json mundo2data/bakers.json --thres_dsd_dist 10
+log-Tue-Mar-21-13:20:07-EDT-2023
+./get_knn.py --ppi data/intact_output/bakers.s.tsv --name bakers --dsd mundo2data/DSD-DIST-bakers.npy --num_neighbors 10 --json mundo2data/bakers.json --thres_dsd_dist 10
+log-Tue-Mar-21-13:20:07-EDT-2023
+./get_knn.py --ppi data/intact_output/bakers.s.tsv --name bakers --dsd mundo2data/DSD-DIST-bakers.npy --num_neighbors 15 --json mundo2data/bakers.json --thres_dsd_dist 10
+log-Tue-Mar-21-13:20:07-EDT-2023
+./get_knn.py --ppi data/intact_output/bakers.s.tsv --name bakers --dsd mundo2data/DSD-DIST-bakers.npy --num_neighbors 100 --json mundo2data/bakers.json --thres_dsd_dist 10
+log-Tue-Mar-21-13:20:07-EDT-2023
+./get_knn.py --ppi data/intact_output/rat.s.tsv --name rat --dsd mundo2data/DSD-DIST-rat.npy --num_neighbors 5 --json mundo2data/rat.json --thres_dsd_dist 10
+log-Tue-Mar-21-13:20:07-EDT-2023
+./get_knn.py --ppi data/intact_output/rat.s.tsv --name rat --dsd mundo2data/DSD-DIST-rat.npy --num_neighbors 10 --json mundo2data/rat.json --thres_dsd_dist 10
+log-Tue-Mar-21-13:20:07-EDT-2023
+./get_knn.py --ppi data/intact_output/rat.s.tsv --name rat --dsd mundo2data/DSD-DIST-rat.npy --num_neighbors 15 --json mundo2data/rat.json --thres_dsd_dist 10
+log-Tue-Mar-21-13:20:07-EDT-2023
+./get_knn.py --ppi data/intact_output/rat.s.tsv --name rat --dsd mundo2data/DSD-DIST-rat.npy --num_neighbors 100 --json mundo2data/rat.json --thres_dsd_dist 10
+log-Tue-Mar-21-13:20:07-EDT-2023
+./get_knn.py --ppi data/intact_output/fly.s.tsv --name fly --dsd mundo2data/DSD-DIST-fly.npy --num_neighbors 5 --json mundo2data/fly.json --thres_dsd_dist 10
+log-Tue-Mar-21-13:20:07-EDT-2023
+./get_knn.py --ppi data/intact_output/fly.s.tsv --name fly --dsd mundo2data/DSD-DIST-fly.npy --num_neighbors 10 --json mundo2data/fly.json --thres_dsd_dist 10
+log-Tue-Mar-21-13:20:07-EDT-2023
+./get_knn.py --ppi data/intact_output/fly.s.tsv --name fly --dsd mundo2data/DSD-DIST-fly.npy --num_neighbors 15 --json mundo2data/fly.json --thres_dsd_dist 10
+log-Tue-Mar-21-13:20:07-EDT-2023
+./get_knn.py --ppi data/intact_output/fly.s.tsv --name fly --dsd mundo2data/DSD-DIST-fly.npy --num_neighbors 100 --json mundo2data/fly.json --thres_dsd_dist 10
+log-Tue-Mar-21-13:20:07-EDT-2023
+./get_knn.py --ppi data/intact_output/mouse.s.tsv --name mouse --dsd mundo2data/DSD-DIST-mouse.npy --num_neighbors 5 --json mundo2data/mouse.json --thres_dsd_dist 10
+log-Tue-Mar-21-13:20:07-EDT-2023
+./get_knn.py --ppi data/intact_output/mouse.s.tsv --name mouse --dsd mundo2data/DSD-DIST-mouse.npy --num_neighbors 10 --json mundo2data/mouse.json --thres_dsd_dist 10
+log-Tue-Mar-21-13:20:07-EDT-2023
+./get_knn.py --ppi data/intact_output/mouse.s.tsv --name mouse --dsd mundo2data/DSD-DIST-mouse.npy --num_neighbors 15 --json mundo2data/mouse.json --thres_dsd_dist 10
+log-Tue-Mar-21-13:20:07-EDT-2023
+./get_knn.py --ppi data/intact_output/mouse.s.tsv --name mouse --dsd mundo2data/DSD-DIST-mouse.npy --num_neighbors 100 --json mundo2data/mouse.json --thres_dsd_dist 10
+log-Tue-Mar-21-14:43:26-EDT-2023
+./get_knn.py --ppi data/intact_output/rat.s.tsv --name rat --dsd mundo2data/DSD-DIST-rat.npy --num_neighbors 5 --json mundo2data/rat.json --thres_dsd_dist 10
+log-Tue-Mar-21-14:43:26-EDT-2023
+./get_knn.py --ppi data/intact_output/rat.s.tsv --name rat --dsd mundo2data/DSD-DIST-rat.npy --num_neighbors 10 --json mundo2data/rat.json --thres_dsd_dist 10
+log-Tue-Mar-21-14:43:26-EDT-2023
+./get_knn.py --ppi data/intact_output/rat.s.tsv --name rat --dsd mundo2data/DSD-DIST-rat.npy --num_neighbors 15 --json mundo2data/rat.json --thres_dsd_dist 10

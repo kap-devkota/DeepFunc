@@ -1,6 +1,6 @@
 *~
 src/**
-mundo2logs/**
+data/pairs/**
 mundo2data/**
 /*.tsv
 /*.log

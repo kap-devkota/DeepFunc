@@ -1,3 +1,4 @@
+#!/cluster/tufts/cowenlab/.envs/denoise/bin/python
 import sys
 sys.path.append("./")
 import argparse

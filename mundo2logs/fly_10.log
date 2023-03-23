@@ -1,0 +1,3 @@
+[!] Running DSD distance for Species A
+[!] Getting 10 nearest neighbors
+[!] Printing knn pairs to data/pairs/fly_10.tsv

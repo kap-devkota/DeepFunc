@@ -29,6 +29,8 @@ def _mets(prots, pred_go_map, true_go_map, all_go_labels, metric, **kwargs):
 
 
 def scoring_fcn(all_go_labels, metric, **kwargs):
+    if metric is None:
+        print('metric')
     assert metric is not None and all_go_labels is not None
     def scfunc(prots, pred_go_map, true_go_map):
         return _mets(prots, pred_go_map, true_go_map, all_go_labels, metric, **kwargs)

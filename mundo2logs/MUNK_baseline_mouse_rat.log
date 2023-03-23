@@ -1,0 +1,275 @@
+[!] Running DSD distance for Species A
+[!!] 	Already computed!
+[!] Running DSD distance for Species B
+[!!] 	Already computed!
+[!] Running ISORANK.
+[!!] 	Size of the matchfile: 27158
+       mouse    rat     score
+0      10655   5377  0.047063
+1      11182   9616  0.256165
+2      11182    878  0.017037
+3      11182   6745  0.017508
+4      11182   9249  0.345068
+...      ...    ...       ...
+27153   9945   6406  0.009229
+27154   9945   5599  0.008900
+27155   9945  10381  0.009027
+27156   9945   2222  0.008989
+27157   9945  10609  0.008900
+
+[27158 rows x 3 columns]
+Computing RKHS for source network... 
+Embedding matrices... 
+Creating final munk matrix... 
+GO: molecular_function, DSD, k: 0 ===> 0.000 +- 0.000
+GO: molecular_function, MUNDO-MUNK, kA: 0, kB: 10 ===> 0.028 +- 0.003
+GO: molecular_function, MUNDO-MUNK, kA: 0, kB: 20 ===> 0.038 +- 0.005
+GO: molecular_function, MUNDO-MUNK, kA: 0, kB: 30 ===> 0.056 +- 0.006
+GO: molecular_function, MUNDO-MUNK, kA: 0, kB: 40 ===> 0.082 +- 0.007
+GO: molecular_function, MUNDO-MUNK, kA: 0, kB: 50 ===> 0.139 +- 0.012
+GO: molecular_function, MUNDO-MUNK, kA: 0, kB: 100 ===> 0.169 +- 0.004
+GO: molecular_function, DSD, k: 10 ===> 0.059 +- 0.005
+GO: molecular_function, MUNDO-MUNK, kA: 10, kB: 10 ===> 0.068 +- 0.007
+GO: molecular_function, MUNDO-MUNK, kA: 10, kB: 20 ===> 0.077 +- 0.008
+GO: molecular_function, MUNDO-MUNK, kA: 10, kB: 30 ===> 0.093 +- 0.010
+GO: molecular_function, MUNDO-MUNK, kA: 10, kB: 40 ===> 0.107 +- 0.006
+GO: molecular_function, MUNDO-MUNK, kA: 10, kB: 50 ===> 0.138 +- 0.010
+GO: molecular_function, MUNDO-MUNK, kA: 10, kB: 100 ===> 0.167 +- 0.005
+GO: molecular_function, DSD, k: 20 ===> 0.085 +- 0.006
+GO: molecular_function, MUNDO-MUNK, kA: 20, kB: 10 ===> 0.094 +- 0.005
+GO: molecular_function, MUNDO-MUNK, kA: 20, kB: 20 ===> 0.098 +- 0.006
+GO: molecular_function, MUNDO-MUNK, kA: 20, kB: 30 ===> 0.111 +- 0.007
+GO: molecular_function, MUNDO-MUNK, kA: 20, kB: 40 ===> 0.118 +- 0.005
+GO: molecular_function, MUNDO-MUNK, kA: 20, kB: 50 ===> 0.140 +- 0.008
+GO: molecular_function, MUNDO-MUNK, kA: 20, kB: 100 ===> 0.166 +- 0.006
+GO: molecular_function, DSD, k: 0 ===> 0.000 +- 0.000
+GO: molecular_function, MUNDO-MUNK, kA: 0, kB: 10 ===> 0.023 +- 0.001
+GO: molecular_function, MUNDO-MUNK, kA: 0, kB: 20 ===> 0.034 +- 0.002
+GO: molecular_function, MUNDO-MUNK, kA: 0, kB: 30 ===> 0.050 +- 0.004
+GO: molecular_function, MUNDO-MUNK, kA: 0, kB: 40 ===> 0.068 +- 0.005
+GO: molecular_function, MUNDO-MUNK, kA: 0, kB: 50 ===> 0.101 +- 0.007
+GO: molecular_function, MUNDO-MUNK, kA: 0, kB: 100 ===> 0.147 +- 0.005
+GO: molecular_function, DSD, k: 10 ===> 0.049 +- 0.003
+GO: molecular_function, MUNDO-MUNK, kA: 10, kB: 10 ===> 0.057 +- 0.004
+GO: molecular_function, MUNDO-MUNK, kA: 10, kB: 20 ===> 0.065 +- 0.004
+GO: molecular_function, MUNDO-MUNK, kA: 10, kB: 30 ===> 0.075 +- 0.005
+GO: molecular_function, MUNDO-MUNK, kA: 10, kB: 40 ===> 0.086 +- 0.006
+GO: molecular_function, MUNDO-MUNK, kA: 10, kB: 50 ===> 0.108 +- 0.007
+GO: molecular_function, MUNDO-MUNK, kA: 10, kB: 100 ===> 0.149 +- 0.005
+GO: molecular_function, DSD, k: 20 ===> 0.072 +- 0.003
+GO: molecular_function, MUNDO-MUNK, kA: 20, kB: 10 ===> 0.078 +- 0.003
+GO: molecular_function, MUNDO-MUNK, kA: 20, kB: 20 ===> 0.084 +- 0.004
+GO: molecular_function, MUNDO-MUNK, kA: 20, kB: 30 ===> 0.092 +- 0.004
+GO: molecular_function, MUNDO-MUNK, kA: 20, kB: 40 ===> 0.100 +- 0.006
+GO: molecular_function, MUNDO-MUNK, kA: 20, kB: 50 ===> 0.118 +- 0.006
+GO: molecular_function, MUNDO-MUNK, kA: 20, kB: 100 ===> 0.152 +- 0.005
+GO: molecular_function, DSD, k: 0 ===> 0.000 +- 0.000
+GO: molecular_function, MUNDO-MUNK, kA: 0, kB: 10 ===> 0.385 +- 0.011
+GO: molecular_function, MUNDO-MUNK, kA: 0, kB: 20 ===> 0.504 +- 0.004
+GO: molecular_function, MUNDO-MUNK, kA: 0, kB: 30 ===> 0.557 +- 0.004
+GO: molecular_function, MUNDO-MUNK, kA: 0, kB: 40 ===> 0.581 +- 0.005
+GO: molecular_function, MUNDO-MUNK, kA: 0, kB: 50 ===> 0.622 +- 0.004
+GO: molecular_function, MUNDO-MUNK, kA: 0, kB: 100 ===> 0.724 +- 0.006
+GO: molecular_function, DSD, k: 10 ===> 0.535 +- 0.003
+GO: molecular_function, MUNDO-MUNK, kA: 10, kB: 10 ===> 0.556 +- 0.003
+GO: molecular_function, MUNDO-MUNK, kA: 10, kB: 20 ===> 0.574 +- 0.003
+GO: molecular_function, MUNDO-MUNK, kA: 10, kB: 30 ===> 0.591 +- 0.003
+GO: molecular_function, MUNDO-MUNK, kA: 10, kB: 40 ===> 0.610 +- 0.005
+GO: molecular_function, MUNDO-MUNK, kA: 10, kB: 50 ===> 0.643 +- 0.003
+GO: molecular_function, MUNDO-MUNK, kA: 10, kB: 100 ===> 0.729 +- 0.004
+GO: molecular_function, DSD, k: 20 ===> 0.589 +- 0.003
+GO: molecular_function, MUNDO-MUNK, kA: 20, kB: 10 ===> 0.598 +- 0.003
+GO: molecular_function, MUNDO-MUNK, kA: 20, kB: 20 ===> 0.606 +- 0.004
+GO: molecular_function, MUNDO-MUNK, kA: 20, kB: 30 ===> 0.618 +- 0.005
+GO: molecular_function, MUNDO-MUNK, kA: 20, kB: 40 ===> 0.633 +- 0.006
+GO: molecular_function, MUNDO-MUNK, kA: 20, kB: 50 ===> 0.660 +- 0.005
+GO: molecular_function, MUNDO-MUNK, kA: 20, kB: 100 ===> 0.735 +- 0.005
+GO: molecular_function, DSD, k: 0 ===> 0.000 +- 0.000
+GO: molecular_function, MUNDO-MUNK, kA: 0, kB: 10 ===> 0.035 +- 0.001
+GO: molecular_function, MUNDO-MUNK, kA: 0, kB: 20 ===> 0.056 +- 0.004
+GO: molecular_function, MUNDO-MUNK, kA: 0, kB: 30 ===> 0.081 +- 0.005
+GO: molecular_function, MUNDO-MUNK, kA: 0, kB: 40 ===> 0.108 +- 0.007
+GO: molecular_function, MUNDO-MUNK, kA: 0, kB: 50 ===> 0.153 +- 0.008
+GO: molecular_function, MUNDO-MUNK, kA: 0, kB: 100 ===> 0.220 +- 0.006
+GO: molecular_function, DSD, k: 10 ===> 0.081 +- 0.005
+GO: molecular_function, MUNDO-MUNK, kA: 10, kB: 10 ===> 0.095 +- 0.005
+GO: molecular_function, MUNDO-MUNK, kA: 10, kB: 20 ===> 0.106 +- 0.005
+GO: molecular_function, MUNDO-MUNK, kA: 10, kB: 30 ===> 0.122 +- 0.006
+GO: molecular_function, MUNDO-MUNK, kA: 10, kB: 40 ===> 0.137 +- 0.007
+GO: molecular_function, MUNDO-MUNK, kA: 10, kB: 50 ===> 0.169 +- 0.007
+GO: molecular_function, MUNDO-MUNK, kA: 10, kB: 100 ===> 0.224 +- 0.006
+GO: molecular_function, DSD, k: 20 ===> 0.119 +- 0.004
+GO: molecular_function, MUNDO-MUNK, kA: 20, kB: 10 ===> 0.128 +- 0.004
+GO: molecular_function, MUNDO-MUNK, kA: 20, kB: 20 ===> 0.135 +- 0.006
+GO: molecular_function, MUNDO-MUNK, kA: 20, kB: 30 ===> 0.147 +- 0.005
+GO: molecular_function, MUNDO-MUNK, kA: 20, kB: 40 ===> 0.159 +- 0.007
+GO: molecular_function, MUNDO-MUNK, kA: 20, kB: 50 ===> 0.183 +- 0.007
+GO: molecular_function, MUNDO-MUNK, kA: 20, kB: 100 ===> 0.229 +- 0.005
+GO: biological_process, DSD, k: 0 ===> 0.000 +- 0.000
+GO: biological_process, MUNDO-MUNK, kA: 0, kB: 10 ===> 0.011 +- 0.004
+GO: biological_process, MUNDO-MUNK, kA: 0, kB: 20 ===> 0.014 +- 0.004
+GO: biological_process, MUNDO-MUNK, kA: 0, kB: 30 ===> 0.018 +- 0.001
+GO: biological_process, MUNDO-MUNK, kA: 0, kB: 40 ===> 0.023 +- 0.006
+GO: biological_process, MUNDO-MUNK, kA: 0, kB: 50 ===> 0.031 +- 0.007
+GO: biological_process, MUNDO-MUNK, kA: 0, kB: 100 ===> 0.049 +- 0.006
+GO: biological_process, DSD, k: 10 ===> 0.030 +- 0.003
+GO: biological_process, MUNDO-MUNK, kA: 10, kB: 10 ===> 0.035 +- 0.004
+GO: biological_process, MUNDO-MUNK, kA: 10, kB: 20 ===> 0.037 +- 0.005
+GO: biological_process, MUNDO-MUNK, kA: 10, kB: 30 ===> 0.040 +- 0.005
+GO: biological_process, MUNDO-MUNK, kA: 10, kB: 40 ===> 0.041 +- 0.004
+GO: biological_process, MUNDO-MUNK, kA: 10, kB: 50 ===> 0.050 +- 0.005
+GO: biological_process, MUNDO-MUNK, kA: 10, kB: 100 ===> 0.060 +- 0.005
+GO: biological_process, DSD, k: 20 ===> 0.057 +- 0.005
+GO: biological_process, MUNDO-MUNK, kA: 20, kB: 10 ===> 0.058 +- 0.007
+GO: biological_process, MUNDO-MUNK, kA: 20, kB: 20 ===> 0.060 +- 0.006
+GO: biological_process, MUNDO-MUNK, kA: 20, kB: 30 ===> 0.060 +- 0.007
+GO: biological_process, MUNDO-MUNK, kA: 20, kB: 40 ===> 0.060 +- 0.007
+GO: biological_process, MUNDO-MUNK, kA: 20, kB: 50 ===> 0.066 +- 0.007
+GO: biological_process, MUNDO-MUNK, kA: 20, kB: 100 ===> 0.072 +- 0.009
+GO: biological_process, DSD, k: 0 ===> 0.000 +- 0.000
+GO: biological_process, MUNDO-MUNK, kA: 0, kB: 10 ===> 0.004 +- 0.000
+GO: biological_process, MUNDO-MUNK, kA: 0, kB: 20 ===> 0.006 +- 0.001
+GO: biological_process, MUNDO-MUNK, kA: 0, kB: 30 ===> 0.007 +- 0.001
+GO: biological_process, MUNDO-MUNK, kA: 0, kB: 40 ===> 0.008 +- 0.001
+GO: biological_process, MUNDO-MUNK, kA: 0, kB: 50 ===> 0.011 +- 0.001
+GO: biological_process, MUNDO-MUNK, kA: 0, kB: 100 ===> 0.025 +- 0.001
+GO: biological_process, DSD, k: 10 ===> 0.013 +- 0.001
+GO: biological_process, MUNDO-MUNK, kA: 10, kB: 10 ===> 0.014 +- 0.001
+GO: biological_process, MUNDO-MUNK, kA: 10, kB: 20 ===> 0.015 +- 0.001
+GO: biological_process, MUNDO-MUNK, kA: 10, kB: 30 ===> 0.016 +- 0.001
+GO: biological_process, MUNDO-MUNK, kA: 10, kB: 40 ===> 0.017 +- 0.001
+GO: biological_process, MUNDO-MUNK, kA: 10, kB: 50 ===> 0.019 +- 0.001
+GO: biological_process, MUNDO-MUNK, kA: 10, kB: 100 ===> 0.030 +- 0.001
+GO: biological_process, DSD, k: 20 ===> 0.022 +- 0.001
+GO: biological_process, MUNDO-MUNK, kA: 20, kB: 10 ===> 0.023 +- 0.001
+GO: biological_process, MUNDO-MUNK, kA: 20, kB: 20 ===> 0.023 +- 0.001
+GO: biological_process, MUNDO-MUNK, kA: 20, kB: 30 ===> 0.024 +- 0.001
+GO: biological_process, MUNDO-MUNK, kA: 20, kB: 40 ===> 0.025 +- 0.001
+GO: biological_process, MUNDO-MUNK, kA: 20, kB: 50 ===> 0.027 +- 0.001
+GO: biological_process, MUNDO-MUNK, kA: 20, kB: 100 ===> 0.035 +- 0.001
+GO: biological_process, DSD, k: 0 ===> 0.000 +- 0.000
+GO: biological_process, MUNDO-MUNK, kA: 0, kB: 10 ===> 0.408 +- 0.006
+GO: biological_process, MUNDO-MUNK, kA: 0, kB: 20 ===> 0.513 +- 0.001
+GO: biological_process, MUNDO-MUNK, kA: 0, kB: 30 ===> 0.523 +- 0.002
+GO: biological_process, MUNDO-MUNK, kA: 0, kB: 40 ===> 0.536 +- 0.001
+GO: biological_process, MUNDO-MUNK, kA: 0, kB: 50 ===> 0.561 +- 0.001
+GO: biological_process, MUNDO-MUNK, kA: 0, kB: 100 ===> 0.629 +- 0.002
+GO: biological_process, DSD, k: 10 ===> 0.525 +- 0.003
+GO: biological_process, MUNDO-MUNK, kA: 10, kB: 10 ===> 0.531 +- 0.002
+GO: biological_process, MUNDO-MUNK, kA: 10, kB: 20 ===> 0.537 +- 0.002
+GO: biological_process, MUNDO-MUNK, kA: 10, kB: 30 ===> 0.544 +- 0.003
+GO: biological_process, MUNDO-MUNK, kA: 10, kB: 40 ===> 0.555 +- 0.002
+GO: biological_process, MUNDO-MUNK, kA: 10, kB: 50 ===> 0.576 +- 0.003
+GO: biological_process, MUNDO-MUNK, kA: 10, kB: 100 ===> 0.634 +- 0.003
+GO: biological_process, DSD, k: 20 ===> 0.547 +- 0.002
+GO: biological_process, MUNDO-MUNK, kA: 20, kB: 10 ===> 0.551 +- 0.002
+GO: biological_process, MUNDO-MUNK, kA: 20, kB: 20 ===> 0.555 +- 0.002
+GO: biological_process, MUNDO-MUNK, kA: 20, kB: 30 ===> 0.561 +- 0.003
+GO: biological_process, MUNDO-MUNK, kA: 20, kB: 40 ===> 0.570 +- 0.002
+GO: biological_process, MUNDO-MUNK, kA: 20, kB: 50 ===> 0.589 +- 0.003
+GO: biological_process, MUNDO-MUNK, kA: 20, kB: 100 ===> 0.639 +- 0.003
+GO: biological_process, DSD, k: 0 ===> 0.000 +- 0.000
+GO: biological_process, MUNDO-MUNK, kA: 0, kB: 10 ===> 0.012 +- 0.001
+GO: biological_process, MUNDO-MUNK, kA: 0, kB: 20 ===> 0.018 +- 0.001
+GO: biological_process, MUNDO-MUNK, kA: 0, kB: 30 ===> 0.022 +- 0.001
+GO: biological_process, MUNDO-MUNK, kA: 0, kB: 40 ===> 0.028 +- 0.002
+GO: biological_process, MUNDO-MUNK, kA: 0, kB: 50 ===> 0.037 +- 0.002
+GO: biological_process, MUNDO-MUNK, kA: 0, kB: 100 ===> 0.072 +- 0.002
+GO: biological_process, DSD, k: 10 ===> 0.035 +- 0.001
+GO: biological_process, MUNDO-MUNK, kA: 10, kB: 10 ===> 0.039 +- 0.001
+GO: biological_process, MUNDO-MUNK, kA: 10, kB: 20 ===> 0.042 +- 0.001
+GO: biological_process, MUNDO-MUNK, kA: 10, kB: 30 ===> 0.045 +- 0.001
+GO: biological_process, MUNDO-MUNK, kA: 10, kB: 40 ===> 0.049 +- 0.000
+GO: biological_process, MUNDO-MUNK, kA: 10, kB: 50 ===> 0.055 +- 0.001
+GO: biological_process, MUNDO-MUNK, kA: 10, kB: 100 ===> 0.080 +- 0.002
+GO: biological_process, DSD, k: 20 ===> 0.053 +- 0.002
+GO: biological_process, MUNDO-MUNK, kA: 20, kB: 10 ===> 0.055 +- 0.001
+GO: biological_process, MUNDO-MUNK, kA: 20, kB: 20 ===> 0.057 +- 0.001
+GO: biological_process, MUNDO-MUNK, kA: 20, kB: 30 ===> 0.060 +- 0.001
+GO: biological_process, MUNDO-MUNK, kA: 20, kB: 40 ===> 0.063 +- 0.001
+GO: biological_process, MUNDO-MUNK, kA: 20, kB: 50 ===> 0.068 +- 0.001
+GO: biological_process, MUNDO-MUNK, kA: 20, kB: 100 ===> 0.087 +- 0.002
+GO: cellular_component, DSD, k: 0 ===> 0.000 +- 0.000
+GO: cellular_component, MUNDO-MUNK, kA: 0, kB: 10 ===> 0.125 +- 0.006
+GO: cellular_component, MUNDO-MUNK, kA: 0, kB: 20 ===> 0.164 +- 0.009
+GO: cellular_component, MUNDO-MUNK, kA: 0, kB: 30 ===> 0.186 +- 0.009
+GO: cellular_component, MUNDO-MUNK, kA: 0, kB: 40 ===> 0.235 +- 0.010
+GO: cellular_component, MUNDO-MUNK, kA: 0, kB: 50 ===> 0.437 +- 0.015
+GO: cellular_component, MUNDO-MUNK, kA: 0, kB: 100 ===> 0.536 +- 0.010
+GO: cellular_component, DSD, k: 10 ===> 0.377 +- 0.011
+GO: cellular_component, MUNDO-MUNK, kA: 10, kB: 10 ===> 0.388 +- 0.012
+GO: cellular_component, MUNDO-MUNK, kA: 10, kB: 20 ===> 0.397 +- 0.011
+GO: cellular_component, MUNDO-MUNK, kA: 10, kB: 30 ===> 0.410 +- 0.009
+GO: cellular_component, MUNDO-MUNK, kA: 10, kB: 40 ===> 0.465 +- 0.009
+GO: cellular_component, MUNDO-MUNK, kA: 10, kB: 50 ===> 0.522 +- 0.010
+GO: cellular_component, MUNDO-MUNK, kA: 10, kB: 100 ===> 0.549 +- 0.015
+GO: cellular_component, DSD, k: 20 ===> 0.493 +- 0.011
+GO: cellular_component, MUNDO-MUNK, kA: 20, kB: 10 ===> 0.495 +- 0.013
+GO: cellular_component, MUNDO-MUNK, kA: 20, kB: 20 ===> 0.497 +- 0.014
+GO: cellular_component, MUNDO-MUNK, kA: 20, kB: 30 ===> 0.502 +- 0.011
+GO: cellular_component, MUNDO-MUNK, kA: 20, kB: 40 ===> 0.522 +- 0.009
+GO: cellular_component, MUNDO-MUNK, kA: 20, kB: 50 ===> 0.548 +- 0.015
+GO: cellular_component, MUNDO-MUNK, kA: 20, kB: 100 ===> 0.558 +- 0.012
+GO: cellular_component, DSD, k: 0 ===> 0.000 +- 0.000
+GO: cellular_component, MUNDO-MUNK, kA: 0, kB: 10 ===> 0.098 +- 0.003
+GO: cellular_component, MUNDO-MUNK, kA: 0, kB: 20 ===> 0.144 +- 0.005
+GO: cellular_component, MUNDO-MUNK, kA: 0, kB: 30 ===> 0.173 +- 0.004
+GO: cellular_component, MUNDO-MUNK, kA: 0, kB: 40 ===> 0.248 +- 0.008
+GO: cellular_component, MUNDO-MUNK, kA: 0, kB: 50 ===> 0.362 +- 0.012
+GO: cellular_component, MUNDO-MUNK, kA: 0, kB: 100 ===> 0.428 +- 0.012
+GO: cellular_component, DSD, k: 10 ===> 0.299 +- 0.009
+GO: cellular_component, MUNDO-MUNK, kA: 10, kB: 10 ===> 0.319 +- 0.010
+GO: cellular_component, MUNDO-MUNK, kA: 10, kB: 20 ===> 0.331 +- 0.010
+GO: cellular_component, MUNDO-MUNK, kA: 10, kB: 30 ===> 0.342 +- 0.009
+GO: cellular_component, MUNDO-MUNK, kA: 10, kB: 40 ===> 0.377 +- 0.008
+GO: cellular_component, MUNDO-MUNK, kA: 10, kB: 50 ===> 0.411 +- 0.010
+GO: cellular_component, MUNDO-MUNK, kA: 10, kB: 100 ===> 0.440 +- 0.011
+GO: cellular_component, DSD, k: 20 ===> 0.383 +- 0.011
+GO: cellular_component, MUNDO-MUNK, kA: 20, kB: 10 ===> 0.393 +- 0.010
+GO: cellular_component, MUNDO-MUNK, kA: 20, kB: 20 ===> 0.398 +- 0.011
+GO: cellular_component, MUNDO-MUNK, kA: 20, kB: 30 ===> 0.403 +- 0.010
+GO: cellular_component, MUNDO-MUNK, kA: 20, kB: 40 ===> 0.415 +- 0.010
+GO: cellular_component, MUNDO-MUNK, kA: 20, kB: 50 ===> 0.432 +- 0.011
+GO: cellular_component, MUNDO-MUNK, kA: 20, kB: 100 ===> 0.448 +- 0.010
+GO: cellular_component, DSD, k: 0 ===> 0.000 +- 0.000
+GO: cellular_component, MUNDO-MUNK, kA: 0, kB: 10 ===> 0.487 +- 0.012
+GO: cellular_component, MUNDO-MUNK, kA: 0, kB: 20 ===> 0.649 +- 0.006
+GO: cellular_component, MUNDO-MUNK, kA: 0, kB: 30 ===> 0.695 +- 0.005
+GO: cellular_component, MUNDO-MUNK, kA: 0, kB: 40 ===> 0.775 +- 0.005
+GO: cellular_component, MUNDO-MUNK, kA: 0, kB: 50 ===> 0.814 +- 0.005
+GO: cellular_component, MUNDO-MUNK, kA: 0, kB: 100 ===> 0.854 +- 0.005
+GO: cellular_component, DSD, k: 10 ===> 0.705 +- 0.005
+GO: cellular_component, MUNDO-MUNK, kA: 10, kB: 10 ===> 0.743 +- 0.005
+GO: cellular_component, MUNDO-MUNK, kA: 10, kB: 20 ===> 0.765 +- 0.005
+GO: cellular_component, MUNDO-MUNK, kA: 10, kB: 30 ===> 0.783 +- 0.004
+GO: cellular_component, MUNDO-MUNK, kA: 10, kB: 40 ===> 0.804 +- 0.003
+GO: cellular_component, MUNDO-MUNK, kA: 10, kB: 50 ===> 0.831 +- 0.004
+GO: cellular_component, MUNDO-MUNK, kA: 10, kB: 100 ===> 0.864 +- 0.004
+GO: cellular_component, DSD, k: 20 ===> 0.762 +- 0.006
+GO: cellular_component, MUNDO-MUNK, kA: 20, kB: 10 ===> 0.784 +- 0.004
+GO: cellular_component, MUNDO-MUNK, kA: 20, kB: 20 ===> 0.795 +- 0.004
+GO: cellular_component, MUNDO-MUNK, kA: 20, kB: 30 ===> 0.808 +- 0.004
+GO: cellular_component, MUNDO-MUNK, kA: 20, kB: 40 ===> 0.819 +- 0.003
+GO: cellular_component, MUNDO-MUNK, kA: 20, kB: 50 ===> 0.839 +- 0.004
+GO: cellular_component, MUNDO-MUNK, kA: 20, kB: 100 ===> 0.869 +- 0.004
+GO: cellular_component, DSD, k: 0 ===> 0.000 +- 0.000
+GO: cellular_component, MUNDO-MUNK, kA: 0, kB: 10 ===> 0.149 +- 0.004
+GO: cellular_component, MUNDO-MUNK, kA: 0, kB: 20 ===> 0.217 +- 0.005
+GO: cellular_component, MUNDO-MUNK, kA: 0, kB: 30 ===> 0.257 +- 0.005
+GO: cellular_component, MUNDO-MUNK, kA: 0, kB: 40 ===> 0.352 +- 0.010
+GO: cellular_component, MUNDO-MUNK, kA: 0, kB: 50 ===> 0.453 +- 0.012
+GO: cellular_component, MUNDO-MUNK, kA: 0, kB: 100 ===> 0.512 +- 0.012
+GO: cellular_component, DSD, k: 10 ===> 0.378 +- 0.010
+GO: cellular_component, MUNDO-MUNK, kA: 10, kB: 10 ===> 0.407 +- 0.010
+GO: cellular_component, MUNDO-MUNK, kA: 10, kB: 20 ===> 0.423 +- 0.010
+GO: cellular_component, MUNDO-MUNK, kA: 10, kB: 30 ===> 0.435 +- 0.009
+GO: cellular_component, MUNDO-MUNK, kA: 10, kB: 40 ===> 0.467 +- 0.009
+GO: cellular_component, MUNDO-MUNK, kA: 10, kB: 50 ===> 0.497 +- 0.011
+GO: cellular_component, MUNDO-MUNK, kA: 10, kB: 100 ===> 0.526 +- 0.011
+GO: cellular_component, DSD, k: 20 ===> 0.466 +- 0.012
+GO: cellular_component, MUNDO-MUNK, kA: 20, kB: 10 ===> 0.479 +- 0.010
+GO: cellular_component, MUNDO-MUNK, kA: 20, kB: 20 ===> 0.486 +- 0.011
+GO: cellular_component, MUNDO-MUNK, kA: 20, kB: 30 ===> 0.491 +- 0.010
+GO: cellular_component, MUNDO-MUNK, kA: 20, kB: 40 ===> 0.500 +- 0.010
+GO: cellular_component, MUNDO-MUNK, kA: 20, kB: 50 ===> 0.516 +- 0.012
+GO: cellular_component, MUNDO-MUNK, kA: 20, kB: 100 ===> 0.533 +- 0.010

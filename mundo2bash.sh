@@ -1,17 +1,18 @@
 #!/bin/bash
 
-SPECIESB=(rat)
-FILESB=(data/intact_output/rat.s.tsv)
+SPECIESA=(rat)
+FILESA=(data/intact_output/rat.s.tsv)
 
 
-SPECIESA=(bakers fly mouse)
-FILESA=(data/intact_output/bakers.s.tsv  data/intact_output/fly.s.tsv data/intact_output/mouse.s.tsv)
+#SPECIESB=(bakers)
+SPECIESB=(bakers fly mouse)
+FILESB=(data/intact_output/bakers.s.tsv  data/intact_output/fly.s.tsv data/intact_output/mouse.s.tsv)
 
 KA="10,20,30,40,50"
 KB="10,20,30,40,50,100"
 
 THRES_DSD_DIST=10
-METRICS="top-1-acc,aupr,auc,f1max"
+METRICS="top-1-acc,aupr,f1max"
 
 
 MDSDIM=100

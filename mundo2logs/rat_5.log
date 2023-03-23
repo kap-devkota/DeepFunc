@@ -1,0 +1,4 @@
+[!] Running DSD distance for Species A
+[!!] 	Already computed!
+[!] Getting 5 nearest neighbors
+[!] Printing knn pairs to data/pairs/rat_5.tsv

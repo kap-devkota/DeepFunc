@@ -1,9 +1,14 @@
 #!/bin/bash
 
-SPECIES=(bakers rat fly mouse)
-FILES=(data/intact_output/bakers.s.tsv data/intact_output/rat.s.tsv data/intact_output/fly.s.tsv data/intact_output/mouse.s.tsv)
+#SPECIES=(bakers rat fly mouse)
+#FILES=(data/intact_output/bakers.s.tsv data/intact_output/rat.s.tsv data/intact_output/fly.s.tsv data/intact_output/mouse.s.tsv)
+SPECIES=(rat)
+FILES=(data/intact_output/rat.s.tsv data/intact_output/rat.s.tsv data/intact_output/fly.s.tsv data/intact_output/mouse.s.tsv)
 
-K=(5 10 15 100)
+
+
+K=(5 10 15)
+#K=(5)
 
 THRES_DSD_DIST=10
 
