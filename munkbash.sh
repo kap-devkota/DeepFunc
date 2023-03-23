@@ -1,24 +1,17 @@
 #!/bin/bash
 
-SPECIESB=(rat)
-FILESB=(data/intact_output/rat.s.tsv data/intact_output/human_sub.s.tsv)
+SPECIESA=(rat)
+FILESA=(data/intact_output/rat.s.tsv data/intact_output/human_sub.s.tsv)
 
+# SPECIESB=(bakers fly mouse)
+SPECIESB=(bakers fly mouse)
+FILESB=(data/intact_output/bakers.s.tsv data/intact_output/fly.s.tsv  data/intact_output/mouse.s.tsv)
 
-SPECIESA=(bakers fly mouse)
-FILESA=(data/intact_output/bakers.s.tsv data/intact_output/fly.s.tsv  data/intact_output/mouse.s.tsv)
-
-#SPECIESB=(yeastPlus)
-#FILESB=(data/intact_output/bakers_add.s.tsv)
-
-
-#SPECIESA=(fly)
-#FILESA=(data/intact_output/fly.s.tsv)
-
-KA="0,10,20"
-KB="10,20,30,40,50,100"
+KA="10,50"
+KB="0,50"
 
 THRES_DSD_DIST=10
-METRICS="top-1-acc,aupr,f1max"
+METRICS="top-1-acc,f1max"
 
 OPFILE="outputs/outputs_munk.tsv"
 
