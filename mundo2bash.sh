@@ -1,23 +1,25 @@
 #!/bin/bash
 
-SPECIESA=(rat)
-FILESA=(data/intact_output/rat.s.tsv)
+SPECIESB=(bakers)
+FILESB=(data/intact_output/bakers.s.tsv)
 
 
-#SPECIESB=(bakers)
-SPECIESB=(bakers fly mouse)
-FILESB=(data/intact_output/bakers.s.tsv  data/intact_output/fly.s.tsv data/intact_output/mouse.s.tsv)
+SPECIESB=(rat fly mouse)
+FILESB=(data/intact_output/mouse.s.tsv  data/intact_output/fly.s.tsv data/intact_output/mouse.s.tsv)
 
-KA="10,20,30,40,50"
-KB="10,20,30,40,50,100"
+# KA="10,20,30,40,50"
+# KB="10,20,30,40,50,100"
+
+KA="10,50"
+KB="20,100"
 
 THRES_DSD_DIST=10
-METRICS="top-1-acc,aupr,f1max"
+METRICS="top-1-acc,f1max"
 
 
 MDSDIM=100
 NOLANDMARKS=500
-WEIGHTMUNDO=0.4
+WEIGHTMUNDO=1.5
 
 while getopts "m:l:w:" args
 do

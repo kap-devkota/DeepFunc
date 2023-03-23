@@ -1,11 +1,11 @@
 #!/bin/bash
 
-SPECIESA=(rat)
-FILESA=(data/intact_output/rat.s.tsv data/intact_output/human_sub.s.tsv)
+SPECIESA=(bakers)
+FILESA=(data/intact_output/bakers.s.tsv)
 
 # SPECIESB=(bakers fly mouse)
-SPECIESB=(bakers fly mouse)
-FILESB=(data/intact_output/bakers.s.tsv data/intact_output/fly.s.tsv  data/intact_output/mouse.s.tsv)
+SPECIESB=(rat fly mouse)
+FILESB=(data/intact_output/rat.s.tsv data/intact_output/fly.s.tsv  data/intact_output/mouse.s.tsv)
 
 KA="10,50"
 KB="0,50"
@@ -16,7 +16,7 @@ METRICS="top-1-acc,f1max"
 OPFILE="outputs/outputs_munk.tsv"
 
 NOLANDMARKS=500
-WEIGHTMUNDO=0.66
+WEIGHTMUNDO=1.5
 
 # (500, 0.2), (500, 0.6), (500, 0.8), (500, 1)
 
