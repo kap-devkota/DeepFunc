@@ -1,16 +1,50 @@
 import os
-from Bio import SeqIO
-from Bio.Seq import Seq
-from Bio.SeqRecord import SeqRecord
+
+def parse_stream(f, comment=b"#"):
+
+    name = None
+    sequence = []
+    for line in f:
+        if line.startswith(comment):
+            continue
+        line = line.strip()
+        if line.startswith(b">"):
+            if name is not None:
+                yield name, b"".join(sequence)
+            name = line[1:]
+            sequence = []
+        else:
+            sequence.append(line.upper())
+    if name is not None:
+        yield name, b"".join(sequence)
 
 
 def parse(f, comment="#"):
+    starter = ">"
+    empty = ""
+    if "b" in f.mode:
+        comment = b"#"
+        starter = b">"
+        empty = b""
     names = []
     sequences = []
-
-    for record in SeqIO.parse(f, "fasta"):
-        names.append(record.name)
-        sequences.append(str(record.seq))
+    name = None
+    sequence = []
+    for line in f:
+        if line.startswith(comment):
+            continue
+        line = line.strip()
+        if line.startswith(starter):
+            if name is not None:
+                names.append(name)
+                sequences.append(empty.join(sequence))
+            name = line[1:]
+            sequence = []
+        else:
+            sequence.append(line.upper())
+    if name is not None:
+        names.append(name)
+        sequences.append(empty.join(sequence))
 
     return names, sequences
 
@@ -21,18 +55,16 @@ def parse_directory(directory, extension=".seq"):
 
     for seqPath in os.listdir(directory):
         if seqPath.endswith(extension):
-            n, s = parse(f"{directory}/{seqPath}", "rb")
+            n, s = parse(open(f"{directory}/{seqPath}", "rb"))
             names.append(n[0].decode("utf-8").strip())
             sequences.append(s[0].decode("utf-8").strip())
     return names, sequences
 
 
 def write(nam, seq, f):
-    records = [
-        SeqRecord(Seq(s), id=n, name=n, description="")
-        for n, s in zip(nam, seq)
-    ]
-    SeqIO.write(records, f, "fasta")
+    for n, s in zip(nam, seq):
+        f.write(">{}\n".format(n))
+        f.write("{}\n".format(s))
 
 
 def count_bins(array, bins):
