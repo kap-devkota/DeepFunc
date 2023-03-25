@@ -10,6 +10,7 @@ from mundo2.io_utils import compute_adjacency
 import glidetools.algorithm.dsd as dsd
 from scipy.spatial.distance import squareform, pdist
 from sklearn.neighbors import NearestNeighbors
+from Bio import SeqIO
 
 def getargs():
     parser = argparse.ArgumentParser()
@@ -61,6 +62,7 @@ def print_pairings(nn, nmap, sname):
     print(f"[!] Printing knn pairs to {fname}")
     
     valid_ids = set(open(f'data/mappings/{sname}_trimmed_ids.tsv', 'r').read().splitlines())
+    hav_ids = [r.id for r in SeqIO.parse(open(f'data/seqs/{sname}_trimmed.fasta', 'r'), 'fasta')]
     
     rmap = {val: key for key, val in nmap.items()}
     pairs = set()
