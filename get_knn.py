@@ -62,7 +62,8 @@ def print_pairings(nn, nmap, sname):
     print(f"[!] Printing knn pairs to {fname}")
     
     valid_ids = set(open(f'data/mappings/{sname}_trimmed_ids.tsv', 'r').read().splitlines())
-    hav_ids = [r.id for r in SeqIO.parse(open(f'data/seqs/{sname}_trimmed.fasta', 'r'), 'fasta')]
+    hav_ids = set([r.id for r in SeqIO.parse(open(f'data/seqs/{sname}_trimmed.fasta', 'r'), 'fasta')])
+    valid_ids = valid_ids.intersection(hav_ids)
     
     rmap = {val: key for key, val in nmap.items()}
     pairs = set()
