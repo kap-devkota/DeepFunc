@@ -23,7 +23,7 @@ do
        
     if [ -z $MODE ]
     then
-        sbatch -o mundo2logs/MUNK_baseline_${SPA}_${SPB}.log --mem 128000 --partition preempt --time=1-10:00:00 --job-name=isorank-${SPA}-${SPB} --partition=preempt $CMD
+        sbatch -o mundo2logs/DSCRIPT${SP}_${k}.log --mem 4g --partition preempt --time=1-10:00:00 --job-name=dscript-${SP}-${K} --partition=preempt $CMD
     else
         $CMD
         exit
