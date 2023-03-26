@@ -7,8 +7,8 @@ FILESA=(data/intact_output/bakers.s.tsv)
 SPECIESB=(rat fly mouse)
 FILESB=(data/intact_output/rat.s.tsv data/intact_output/fly.s.tsv  data/intact_output/mouse.s.tsv)
 
-KA="10,50"
-KB="0,50"
+KB="10,20,50"
+KA="0,50"
 
 THRES_DSD_DIST=10
 METRICS="top-1-acc,f1max"

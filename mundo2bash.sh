@@ -1,7 +1,7 @@
 #!/bin/bash
 
-SPECIESB=(bakers)
-FILESB=(data/intact_output/bakers.s.tsv)
+SPECIESA=(bakers)
+FILESA=(data/intact_output/bakers.s.tsv)
 
 
 SPECIESB=(rat fly mouse)
