@@ -2,9 +2,9 @@
 
 SPA=(bakers)
 SPB=(fly)
-KNNA=('' 5 10 15)
+KNNA=('' _5  _10 _15)
 # KNNA=('')
-# KNNB=('' 5 10 15)
+# KNNB=('' _5 _10 _15)
 KNNB=('')
 
 KA="10,50"
@@ -48,6 +48,6 @@ do
     #    # echo $CMD >> mundo2logs/base_${SPA}_${SPB}.cmd
         echo "Queuing command: $CMD"
        
-    #    sbatch -o mundo2logs/baseline_${SPA}_${EXTA}_${SPB}_${EXTB}.log --mem 128000 --partition preempt --time=1-10:00:00 --job-name=isorank-${SPA}-${SPB} --partition=preempt $CMD
+        sbatch -o mundo2logs/addition_${SPA}${EXTA}_${SPB}${EXTB}.log --mem 128000 --partition preempt --time=1-10:00:00 --job-name=isorank-${SPA}-${SPB} --partition=preempt $CMD
     done
 done
