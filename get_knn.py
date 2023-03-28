@@ -11,6 +11,7 @@ import glidetools.algorithm.dsd as dsd
 from scipy.spatial.distance import squareform, pdist
 from sklearn.neighbors import NearestNeighbors
 from Bio import SeqIO
+from sklearn.manifold import Isomap
 
 def getargs():
     parser = argparse.ArgumentParser()
@@ -27,7 +28,7 @@ def getargs():
     parser.add_argument("--json", default = None, help = "Protein annotation to Matrix index in json format for DSD and MDS matrix of A. If not present, the JSON file will be computed at this location")
     
     # k
-    parser.add_argument("--num_neighbors", default=10, help = 'Number of neighbors to get for each protein')
+    parser.add_argument("--ext", default=10, help = 'Number of neighbors to get for each protein')
     
     return parser.parse_args()
 
@@ -56,6 +57,21 @@ def compute_dsd_dist(ppifile, dsdfile, jsonfile, threshold = -1, **kwargs):
             DSDdist = np.where(DSDdist > threshold, threshold, DSDdist)
         return DSDdist, protmap
 
+def compute_mds(mdsfile, dsddist, mds_r = 100, **kwargs):
+    assert os.path.exists(mdsfile) or dsddist is not None
+    print(f"[!] {kwargs['msg']}")
+    if os.path.exists(mdsfile):
+        print(f"[!!] \tAlready computed!")
+        MDSemb = np.load(mdsfile)
+        return MDSemb
+    else:
+        mdsemb = Isomap(n_components = mds_r, metric = "precomputed")
+        MDSemb = mdsemb.fit_transform(dsddist)
+        if mdsfile is not None:
+            np.save(mdsfile, MDSemb)
+        print(f"[!]\t Reconstruction Error: {mdsemb.reconstruction_error()}")
+        return MDSemb
+    
 def print_pairings(nn, nmap, sname):
     k = nn.shape[1]
     fname = f'data/pairs/{sname}_{k}.tsv'
@@ -80,6 +96,11 @@ def main(args):
     DSD, nmap = compute_dsd_dist(args.ppi, args.dsd, args.json, threshold = 10,
                                   msg = "Running DSD distance for Species A")
     
+    MDSB = compute_mds(f"mundo2data/ISOMAP-{args.name}-100{args.ext}.npy", DSD, mds_r = 100, 
+                      msg = "Computing the MDS embeddings from the DSD distances for Species B")
+    
+    
+    exit(0)
     print(f"[!] Getting {args.num_neighbors} nearest neighbors")
     knn_distance_based  = NearestNeighbors(n_neighbors=int(args.num_neighbors)).fit(DSD)
     knn = knn_distance_based.kneighbors(return_distance=False)
