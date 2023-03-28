@@ -12,6 +12,7 @@ from scipy.spatial.distance import squareform, pdist
 from sklearn.neighbors import NearestNeighbors
 from Bio import SeqIO
 from sklearn.manifold import Isomap
+from mundo2.linalg import compute_k_svd
 
 def getargs():
     parser = argparse.ArgumentParser()
@@ -25,10 +26,9 @@ def getargs():
     parser.add_argument("--thres_dsd_dist", type = float, default = 10, help = "If the DSD distance computed is > this threshold, replace that with the threshold")
     
     # JSON
-    parser.add_argument("--json", default = None, help = "Protein annotation to Matrix index in json format for DSD and MDS matrix of A. If not present, the JSON file will be computed at this location")
-    
+    parser.add_argument("--json", default = None, help = "Protein annotation to Matrix index in json format for DSD and MDS matrix of A. If not present, the JSON file will be computed at this location")   
     # k
-    parser.add_argument("--ext", default=10, help = 'Number of neighbors to get for each protein')
+    parser.add_argument("--ext", default="", help = 'Number of neighbors to get for each protein')
     
     return parser.parse_args()
 
@@ -72,6 +72,19 @@ def compute_mds(mdsfile, dsddist, mds_r = 100, **kwargs):
         print(f"[!]\t Reconstruction Error: {mdsemb.reconstruction_error()}")
         return MDSemb
     
+def compute_svd(svdfile, dsddist, svd_r = 100, **kwargs):
+    assert os.path.exists(svdfile) or dsddist is not None
+    print(f"[!] {kwargs['msg']}")
+    if os.path.exists(svdfile):
+        print(f"[!!] \tAlready computed!")
+        SVDemb = np.load(svdfile)
+        return SVDemb
+    else:
+        SVDemb = compute_k_svd(dsddist, svd_r)
+        if svdfile is not None:
+            np.save(svdfile, SVDemb)
+        return SVDemb
+    
 def print_pairings(nn, nmap, sname):
     k = nn.shape[1]
     fname = f'data/pairs/{sname}_{k}.tsv'
@@ -96,9 +109,8 @@ def main(args):
     DSD, nmap = compute_dsd_dist(args.ppi, args.dsd, args.json, threshold = 10,
                                   msg = "Running DSD distance for Species A")
     
-    MDSB = compute_mds(f"mundo2data/ISOMAP-{args.name}-100{args.ext}.npy", DSD, mds_r = 100, 
-                      msg = "Computing the MDS embeddings from the DSD distances for Species B")
-    
+    SVDA = compute_svd(f"mundo2data/SVD-${args.name}${args.ext}-250.npy", DSD, svd_r = 250, 
+                      msg = "Computing the SVD embeddings from the DSD distances for Species A")
     
     exit(0)
     print(f"[!] Getting {args.num_neighbors} nearest neighbors")

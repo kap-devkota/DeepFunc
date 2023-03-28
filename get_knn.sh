@@ -1,9 +1,9 @@
 #!/bin/bash
 
-SPECIES=(bakers rat fly)
+SPECIES=(fly bakers rat)
 FILES=(data/intact_output/rat.s.tsv)
 
-K=("" _5 _10 _15)
+K=("" "_5" "_10" "_15")
 
 
 THRES_DSD_DIST=10
@@ -20,14 +20,21 @@ do
         DSD=mundo2data/DSD-DIST-${SP}${k}.npy
         JSON=mundo2data/${SP}.json
 
-        CMD="./get_knn.py --ppi ${PPI} --name ${SP} --dsd ${DSD} --ext $k --json ${JSON} --thres_dsd_dist ${THRES_DSD_DIST}"
-        # echo "Queuing command: $CMD"
-        if [ -z $MODE ]
+        if [ -z $k ]
             then
-                sbatch -o mundo2logs/${SP}_${k}.log --mem 128000 --partition preempt --time=1-10:00:00 --job-name=knn-${SP}-${k} --partition=preempt $CMD
+                CMD="./get_knn.py --ppi ${PPI} --name ${SP} --dsd ${DSD} --json ${JSON} --thres_dsd_dist ${THRES_DSD_DIST}"
             else
-                $CMD
-                exit
+                CMD="./get_knn.py --ppi ${PPI} --name ${SP} --dsd ${DSD} --json ${JSON} --thres_dsd_dist ${THRES_DSD_DIST} --ext ${k}"
         fi
+        # CMD="./get_knn.py --ppi ${PPI} --name ${SP} --dsd ${DSD} --ext $k --json ${JSON} --thres_dsd_dist ${THRES_DSD_DIST}"
+        echo "Queuing command: $CMD"
+        # $CMD
+        # if [ -z $MODE ]
+        #     then
+        #         sbatch -o mundo2logs/${SP}_${k}.log --mem 128000 --partition preempt --time=1-10:00:00 --job-name=knn-${SP}-${k} --partition=preempt $CMD
+        #     else
+        #         $CMD
+        #         exit
+        # fi
     done
 done
